@@ -496,21 +496,13 @@ export default function UnifiedLanding() {
                  className="group relative flex flex-col items-center gap-1.5 p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-teal-500/30 transition-all hover:scale-105"
                >
                  {/* Icon */}
-                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-gradient-to-br from-teal-900/50 to-slate-900/50 border border-white/10 group-hover:border-teal-500/50 transition-colors">
+                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-white/10 group-hover:border-teal-500/50 transition-colors">
                    <Image
                      src={`/generated/images/methods/lineage-${lineageItem.id}.png`}
                      alt={lineageItem.title}
                      fill
-                     className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                     onError={(e) => {
-                       const target = e.target as HTMLElement;
-                       target.style.display = 'none';
-                     }}
+                     className="object-cover group-hover:scale-110 transition-transform"
                    />
-                   {/* Fallback gradient */}
-                   <div className="absolute inset-0 bg-gradient-to-br from-teal-500/30 to-purple-500/30 flex items-center justify-center">
-                     <Sparkles className="w-5 h-5 text-teal-300/60" />
-                   </div>
                  </div>
                  {/* Label */}
                  <span className="text-[8px] sm:text-[10px] text-white/60 group-hover:text-teal-300 transition-colors text-center max-w-[60px] sm:max-w-[80px] leading-tight truncate">
