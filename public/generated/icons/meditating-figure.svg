@@ -1,0 +1,58 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Mystical Background Aura (Subtle rings) -->
+  <circle cx="256" cy="280" r="180" fill="none" stroke="white" stroke-width="1" opacity="0.1"/>
+  <circle cx="256" cy="280" r="200" fill="none" stroke="white" stroke-width="1" opacity="0.05"/>
+  
+  <!-- Silhouette Body (Minimal Line Art) -->
+  <path d="M256 150 
+           Q 330 150 360 210 
+           Q 390 270 430 380 
+           Q 440 420 380 420 
+           L 256 430 
+           L 132 420 
+           Q 72 420 82 380 
+           Q 122 270 152 210 
+           Q 182 150 256 150 Z" 
+        fill="none" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Head -->
+  <circle cx="256" cy="115" r="35" fill="none" stroke="white" stroke-width="6"/>
+
+  <!-- Chakras (7 Points of Light) -->
+  <g fill="white" filter="url(#glow)">
+    <!-- 1. Root (Muladhara) -->
+    <circle cx="256" cy="415" r="5" opacity="0.8"/>
+    
+    <!-- 2. Sacral (Svadhisthana) -->
+    <circle cx="256" cy="375" r="6" opacity="0.8"/>
+    
+    <!-- 3. Solar Plexus (Manipura) -->
+    <circle cx="256" cy="325" r="7" opacity="0.9"/>
+    
+    <!-- 4. Heart (Anahata) -->
+    <circle cx="256" cy="270" r="9"/>
+    <!-- Heart Radiance -->
+    <circle cx="256" cy="270" r="16" fill="none" stroke="white" stroke-width="1.5" opacity="0.4"/>
+    
+    <!-- 5. Throat (Vishuddha) -->
+    <circle cx="256" cy="210" r="6" opacity="0.9"/>
+    
+    <!-- 6. Third Eye (Ajna) -->
+    <circle cx="256" cy="115" r="5" opacity="0.9"/>
+    
+    <!-- 7. Crown (Sahasrara) - Floating Star -->
+    <path d="M256 40 L260 55 L275 59 L260 63 L256 78 L252 63 L237 59 L252 55 Z" />
+    <!-- Crown Halo -->
+    <circle cx="256" cy="59" r="25" fill="none" stroke="white" stroke-width="1" opacity="0.3"/>
+  </g>
+
+  <!-- Connecting Energy Line (Sushumna) -->
+  <line x1="256" y1="85" x2="256" y2="415" stroke="white" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/>
+</svg>

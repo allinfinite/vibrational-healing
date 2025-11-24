@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Gradient for a subtle spiritual glow (optional use, but nice for definition) -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Group: Main Composition -->
+  <g fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    
+    <!-- 1. The Paint Brush (Central Totem) -->
+    <!-- Handle -->
+    <path d="M238 452 L238 240 L274 240 L274 452 A18 18 0 0 1 238 452 Z" />
+    <!-- Ferrule detail -->
+    <line x1="238" y1="280" x2="274" y2="280" stroke-width="10" />
+    <!-- Bristles (Flame-like/Spiritual) -->
+    <path d="M238 240 C238 150 256 80 256 80 C256 80 274 150 274 240" />
+
+    <!-- 2. The Musical Note Intertwining (Helix) -->
+    <!-- Note Head (Bottom Left) -->
+    <circle cx="170" cy="360" r="22" fill="#ffffff" stroke="none" />
+    
+    <!-- Swirl Segment 1: From Note Head, crossing IN FRONT of brush handle -->
+    <path d="M185 350 C 220 300, 290 300, 340 340" />
+    
+    <!-- Swirl Segment 2: Looping BEHIND brush (Broken path to simulate depth) -->
+    <!-- Right side of brush -->
+    <path d="M340 340 C 370 370, 380 280, 330 240" />
+    <!-- Left side of brush (Gap between 274 and 238 creates the 'behind' illusion) -->
+    <path d="M220 210 C 180 200, 180 150, 220 130" />
+
+    <!-- Swirl Segment 3: Top Loop crossing IN FRONT of Bristles -->
+    <path d="M220 130 C 250 115, 290 130, 310 170" />
+
+  </g>
+
+  <!-- 3. Mystical Elements (Sparkles) -->
+  <g fill="#ffffff" stroke="none">
+    <!-- Top Right Star -->
+    <path d="M380 120 C380 120, 385 105, 390 120 C390 120, 405 125, 390 130 C390 130, 385 145, 380 130 C380 130, 365 125, 380 120" />
+    <!-- Bottom Left Sparkle -->
+    <circle cx="140" cy="420" r="4" />
+    <!-- Middle Left Star -->
+    <path d="M120 250 C120 250, 123 240, 126 250 C126 250, 136 253, 126 256 C126 256, 123 266, 120 256 C120 256, 110 253, 120 250" />
+  </g>
+
+</svg>

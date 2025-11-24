@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- The Globe -->
+  <circle cx="256" cy="200" r="90" stroke-width="12"/>
+  <path d="M256 110c-30 0-60 40-60 90s30 90 60 90M256 110c30 0 60 40 60 90s-30 90-60 90"/>
+  <path d="M170 200h172"/>
+  
+  <!-- The Hands (Cupped/Offering) -->
+  <path d="M104 502c0-60 20-140 60-180 10-10 28-20 40-20 20 0 30 10 52 30"/>
+  <path d="M408 502c0-60-20-140-60-180-10-10-28-20-40-20-20 0-30 10-52 30"/>
+  
+  <!-- Thumb/Finger details for depth -->
+  <path d="M164 322c-10-30-20-50-44-50-10 0-20 10-20 40"/>
+  <path d="M348 322c10-30 20-50 44-50 10 0 20 10 20 40"/>
+
+  <!-- Mystical Rays/Halo -->
+  <path d="M256 60v-30"/>
+  <path d="M140 100l-20-20"/>
+  <path d="M372 100l20-20"/>
+  
+  <!-- Mystical Sparkles -->
+  <path d="M256 40l0 0m-100 100l0 0" stroke-width="0" fill="white">
+    <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <path d="M420 160l15-15m-15 15l15 15m-15-15l-15-15m15 15l-15 15" stroke-width="4"/>
+  <path d="M92 160l15-15m-15 15l15 15m-15-15l-15-15m15 15l-15 15" stroke-width="4"/>
+</svg>
