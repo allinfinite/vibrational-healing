@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useSound } from '@/lib/contexts/SoundContext';
 import EpicModal from '@/components/ui/EpicModal';
 import MethodWheel from '@/components/features/MethodWheel';
-import { CloudLightning, Sun, Info, Radio, Heart, Waves, Zap, X, Sparkles, Brain } from 'lucide-react'; 
+import { CloudLightning, Sun, Info, Radio, Heart, Waves, Zap, X, Sparkles, Brain, BookOpen } from 'lucide-react'; 
 import { LINEAGE_CONTENT } from '@/lib/content';
 import AnxietyBackground from '@/components/features/AnxietyBackground';
 import PeaceBackground from '@/components/features/PeaceBackground';
@@ -74,6 +74,7 @@ export default function UnifiedLanding() {
   const { playVoice, stopVoice, resumeContext, isReady, setZone } = useSound();
   const [icons, setIcons] = useState<Record<string, string>>({});
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+  const [selectedLineage, setSelectedLineage] = useState<string | null>(null);
   const [activeZone, setActiveZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
   const [activeInfo, setActiveInfo] = useState<string | null>(null);
 
@@ -126,8 +127,26 @@ export default function UnifiedLanding() {
       setSelectedMethod(METHOD_ORDER[prevIndex]);
       stopVoice();
   };
+
+  // Lineage navigation
+  const handleLineageNext = () => {
+      if (!selectedLineage) return;
+      const currentIndex = LINEAGE_CONTENT.findIndex(l => l.id === selectedLineage);
+      const nextIndex = (currentIndex + 1) % LINEAGE_CONTENT.length;
+      setSelectedLineage(LINEAGE_CONTENT[nextIndex].id);
+      stopVoice();
+  };
+
+  const handleLineagePrev = () => {
+      if (!selectedLineage) return;
+      const currentIndex = LINEAGE_CONTENT.findIndex(l => l.id === selectedLineage);
+      const prevIndex = (currentIndex - 1 + LINEAGE_CONTENT.length) % LINEAGE_CONTENT.length;
+      setSelectedLineage(LINEAGE_CONTENT[prevIndex].id);
+      stopVoice();
+  };
   
   const lineage = getLineageInfo(selectedMethod);
+  const currentLineage = LINEAGE_CONTENT.find(l => l.id === selectedLineage);
 
   const getInfoColor = (color: string) => {
     switch(color) {
@@ -454,46 +473,111 @@ export default function UnifiedLanding() {
           </motion.section>
        </div>
 
-       {/* Journey indicator - Bottom */}
-       <div className="absolute bottom-4 lg:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-         <div className="relative w-48 lg:w-64 h-1 rounded-full overflow-hidden bg-white/10">
-           <div 
-             className="absolute inset-0 rounded-full"
-             style={{ background: 'linear-gradient(90deg, #8b5cf6 0%, #2dd4bf 50%, #fbbf24 100%)' }}
-           />
-           <motion.div
-             className="absolute top-1/2 -translate-y-1/2 w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-white shadow-lg"
-             style={{
-               boxShadow: activeZone === 'anxiety' 
-                 ? '0 0 20px rgba(139,92,246,0.8)' 
-                 : activeZone === 'transformation' 
-                   ? '0 0 20px rgba(45,212,191,0.8)'
-                   : '0 0 20px rgba(251,191,36,0.8)',
-             }}
-             animate={{
-               left: activeZone === 'anxiety' ? '0%' : activeZone === 'transformation' ? '50%' : '100%',
-               x: activeZone === 'anxiety' ? '0%' : activeZone === 'transformation' ? '-50%' : '-100%',
-             }}
-             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-           />
+       {/* Lineages Section - Bottom */}
+       <div className="relative z-20 w-full px-4 pb-8 pt-4">
+         <div className="max-w-5xl mx-auto">
+           {/* Section Header */}
+           <div className="flex items-center justify-center gap-2 mb-4">
+             <BookOpen className="w-4 h-4 text-teal-400" />
+             <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-teal-300/80 uppercase">
+               Healing Lineages
+             </span>
+           </div>
+           
+           {/* Lineage Icons Grid */}
+           <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+             {LINEAGE_CONTENT.map((lineageItem, i) => (
+               <motion.button
+                 key={lineageItem.id}
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.5 + i * 0.05 }}
+                 onClick={() => setSelectedLineage(lineageItem.id)}
+                 className="group relative flex flex-col items-center gap-1.5 p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-teal-500/30 transition-all hover:scale-105"
+               >
+                 {/* Icon */}
+                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-gradient-to-br from-teal-900/50 to-slate-900/50 border border-white/10 group-hover:border-teal-500/50 transition-colors">
+                   <Image
+                     src={`/generated/images/methods/lineage-${lineageItem.id}.png`}
+                     alt={lineageItem.title}
+                     fill
+                     className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                     onError={(e) => {
+                       const target = e.target as HTMLElement;
+                       target.style.display = 'none';
+                     }}
+                   />
+                   {/* Fallback gradient */}
+                   <div className="absolute inset-0 bg-gradient-to-br from-teal-500/30 to-purple-500/30 flex items-center justify-center">
+                     <Sparkles className="w-5 h-5 text-teal-300/60" />
+                   </div>
+                 </div>
+                 {/* Label */}
+                 <span className="text-[8px] sm:text-[10px] text-white/60 group-hover:text-teal-300 transition-colors text-center max-w-[60px] sm:max-w-[80px] leading-tight truncate">
+                   {lineageItem.title.split(' ')[0]}
+                 </span>
+               </motion.button>
+             ))}
+           </div>
          </div>
-         <span className="text-[10px] lg:text-xs text-white/40 tracking-widest uppercase">
-           {activeZone === 'anxiety' ? 'Starting Point' : activeZone === 'transformation' ? 'Transforming' : 'Arriving'}
-         </span>
        </div>
 
-       {/* Info Modal */}
+       {/* Journey indicator */}
+       <div className="relative z-20 flex justify-center pb-4">
+         <div className="flex flex-col items-center gap-2">
+           <div className="relative w-48 lg:w-64 h-1 rounded-full overflow-hidden bg-white/10">
+             <div 
+               className="absolute inset-0 rounded-full"
+               style={{ background: 'linear-gradient(90deg, #8b5cf6 0%, #2dd4bf 50%, #fbbf24 100%)' }}
+             />
+             <motion.div
+               className="absolute top-1/2 -translate-y-1/2 w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-white shadow-lg"
+               style={{
+                 boxShadow: activeZone === 'anxiety' 
+                   ? '0 0 20px rgba(139,92,246,0.8)' 
+                   : activeZone === 'transformation' 
+                     ? '0 0 20px rgba(45,212,191,0.8)'
+                     : '0 0 20px rgba(251,191,36,0.8)',
+               }}
+               animate={{
+                 left: activeZone === 'anxiety' ? '0%' : activeZone === 'transformation' ? '50%' : '100%',
+                 x: activeZone === 'anxiety' ? '0%' : activeZone === 'transformation' ? '-50%' : '-100%',
+               }}
+               transition={{ type: "spring", stiffness: 300, damping: 30 }}
+             />
+           </div>
+           <span className="text-[10px] lg:text-xs text-white/40 tracking-widest uppercase">
+             {activeZone === 'anxiety' ? 'Starting Point' : activeZone === 'transformation' ? 'Transforming' : 'Arriving'}
+           </span>
+         </div>
+       </div>
+
+       {/* Method Modal */}
        <EpicModal
          isOpen={!!selectedMethod}
          onClose={() => setSelectedMethod(null)}
          onNext={handleNext}
          onPrev={handlePrev}
          title={selectedMethod ? (lineage?.title || selectedMethod.replace(/-/g, ' ').toUpperCase()) : ''}
-         subtitle="Vibrational Healing Lineage"
+         subtitle="Vibrational Healing Method"
          description={lineage?.fullDescription || lineage?.text || "Sound therapy uses specific frequencies to entrain the brain and body into a state of coherence."}
          imageSrc={lineage?.relatedMethod ? `/generated/images/methods/${lineage.relatedMethod}.png` : undefined}
          audioSrc={lineage?.audioFile ? `/generated/audio/${lineage.audioFile}` : undefined}
          audioSource={lineage?.audioSource}
+       />
+
+       {/* Lineage Modal */}
+       <EpicModal
+         isOpen={!!selectedLineage}
+         onClose={() => setSelectedLineage(null)}
+         onNext={handleLineageNext}
+         onPrev={handleLineagePrev}
+         title={currentLineage?.title || ''}
+         subtitle="Sound Healing Lineage"
+         description={currentLineage?.fullDescription || currentLineage?.text || ''}
+         imageSrc={currentLineage ? `/generated/images/methods/lineage-${currentLineage.id}.png` : undefined}
+         audioSrc={currentLineage?.audioFile ? `/generated/audio/${currentLineage.audioFile}` : undefined}
+         audioSource={currentLineage?.audioSource}
        />
 
        {/* Start Overlay */}

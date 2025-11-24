@@ -62,6 +62,42 @@ const METHODS = [
     }
 ];
 
+// Lineage Icons - for the lineages section on the landing page
+const LINEAGES = [
+    {
+        name: 'lineage-vibrational-medicine',
+        prompt: 'Circular icon: A tuning fork emitting perfect concentric sound waves, surrounded by a glowing biofield aura. Scientific yet mystical. Teal and silver tones, clean design, 3D render icon style.'
+    },
+    {
+        name: 'lineage-energy-medicine',
+        prompt: 'Circular icon: Flowing prana/chi energy spiraling through a human silhouette outline. Golden life force energy. Eastern medicine meets modern science aesthetic. Warm gold and white, icon style.'
+    },
+    {
+        name: 'lineage-nada-yoga',
+        prompt: 'Circular icon: The Om symbol (ॐ) radiating sound waves, transforming into lotus petals. Ancient Sanskrit meets cosmic vibration. Deep purple and gold, spiritual, icon style.'
+    },
+    {
+        name: 'lineage-mantra-healing',
+        prompt: 'Circular icon: Sacred Sanskrit letters floating in a mandala pattern, emitting healing light rays. Spiritual text as vibration. Saffron orange and gold tones, mystical, icon style.'
+    },
+    {
+        name: 'lineage-sound-therapy',
+        prompt: 'Circular icon: Brain waves (alpha, theta, delta patterns) being harmonized by sound frequencies. Scientific visualization of entrainment. Clean blue and white, medical-meets-spiritual, icon style.'
+    },
+    {
+        name: 'lineage-shamanic-healing',
+        prompt: 'Circular icon: A drum with rippling energy waves connecting to earth and sky. Shamanic journey visualization. Earthy browns, deep reds, and ethereal blues. Primal yet cosmic, icon style.'
+    },
+    {
+        name: 'lineage-integral-resonance',
+        prompt: 'Circular icon: A coherent heart emitting toroidal field energy that expands outward to other hearts. Heart-brain coherence visualization. Rose pink and teal, interconnected, icon style.'
+    },
+    {
+        name: 'lineage-field-effect',
+        prompt: 'Circular icon: Earth surrounded by overlapping coherent wave fields from multiple sources, creating a global harmonic grid. Planetary healing visualization. Blue, green, and gold, cosmic scale, icon style.'
+    }
+];
+
 async function generateImage(prompt, filename, isHero = false) {
     const targetDir = isHero ? HERO_DIR : IMAGE_DIR;
     const filepath = path.join(targetDir, `${filename}.png`);
@@ -118,6 +154,12 @@ async function main() {
     // Generate Method Images
     for (const m of METHODS) {
         await generateImage(m.prompt, m.name);
+    }
+    
+    // Generate Lineage Icons
+    console.log('\n--- Generating Lineage Icons ---');
+    for (const l of LINEAGES) {
+        await generateImage(l.prompt, l.name);
     }
 }
 
