@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useSound } from '@/lib/contexts/SoundContext';
-import Modal from '@/components/ui/Modal';
+import EpicModal from '@/components/ui/EpicModal';
 import AudioVisualizer from '@/components/features/AudioVisualizer';
 import MethodWheel from '@/components/features/MethodWheel';
 import AnxietyBackground from '@/components/features/AnxietyBackground';
@@ -123,32 +123,15 @@ export default function InteractiveMap() {
        </div>
 
        {/* Info Modal */}
-       <Modal
+       <EpicModal
          isOpen={!!selectedMethod}
          onClose={() => setSelectedMethod(null)}
          title={selectedMethod ? (lineage?.title || selectedMethod.replace(/-/g, ' ').toUpperCase()) : ''}
-       >
-           <div className="flex flex-col items-center">
-               <div 
-                    className="w-24 h-24 text-teal-300 mb-6"
-                    dangerouslySetInnerHTML={{ __html: icons[selectedMethod || ''] || '' }}
-               />
-               <p className="text-lg text-center leading-relaxed opacity-90 max-w-md">
-                   {lineage?.text || "Sound therapy uses specific frequencies to entrain the brain and body into a state of coherence."}
-               </p>
-               
-               {lineage && (
-               <div className="mt-8 p-4 bg-white/5 rounded-lg w-full">
-                   <h4 className="text-sm font-bold text-teal-400 mb-2 flex items-center gap-2">
-                       <Info className="w-4 h-4" /> Historical Context
-                   </h4>
-                   <p className="text-sm opacity-70">
-                       {lineage.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                   </p>
-               </div>
-               )}
-           </div>
-       </Modal>
+         subtitle="Vibrational Healing Lineage"
+         description={lineage?.fullDescription || lineage?.text || "Sound therapy uses specific frequencies to entrain the brain and body into a state of coherence."}
+         imageSrc={lineage?.relatedMethod ? `/generated/images/methods/${lineage.relatedMethod}.png` : undefined}
+         audioSrc={lineage ? `/generated/audio/${lineage.id}.mp3` : undefined}
+       />
 
        {/* Start Overlay */}
        {!isReady && (
