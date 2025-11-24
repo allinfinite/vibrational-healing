@@ -216,22 +216,22 @@ export default function UnifiedLanding() {
        </div>
 
        {/* Top Header - Title & Info Cards */}
-       <div className="absolute top-4 left-0 right-0 z-20 px-6">
+       <div className="absolute top-2 sm:top-4 left-0 right-0 z-20 px-3 sm:px-6">
          <div className="max-w-7xl mx-auto">
            {/* Centered Title */}
            <motion.div 
-             className="text-center mb-4"
+             className="text-center mb-2 sm:mb-4"
              initial={{ opacity: 0, y: -20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.3 }}
            >
-             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 backdrop-blur-md mb-2">
-               <Sparkles className="w-3 h-3 text-teal-400" />
-               <span className="text-[10px] font-bold tracking-[0.15em] text-teal-300 uppercase">
+             <div className="inline-flex items-center space-x-2 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-teal-500/10 border border-teal-500/30 backdrop-blur-md mb-1 sm:mb-2">
+               <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-teal-400" />
+               <span className="text-[8px] sm:text-[10px] font-bold tracking-[0.15em] text-teal-300 uppercase">
                  Sound & Energy Healing
                </span>
              </div>
-             <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                <span className="text-slate-200">Transform </span>
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-teal-400 to-amber-400">
                  Anxiety into Peace
@@ -240,7 +240,7 @@ export default function UnifiedLanding() {
            </motion.div>
 
            {/* Info Cards Row - Compact */}
-           <div className="flex justify-center gap-2 flex-wrap">
+           <div className="flex justify-center gap-1.5 sm:gap-2 flex-wrap max-w-lg sm:max-w-none mx-auto">
              {INFO_CARDS.map((card, i) => (
                <motion.button
                  key={card.id}
@@ -248,15 +248,16 @@ export default function UnifiedLanding() {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.4 + i * 0.1 }}
                  onClick={() => setActiveInfo(activeInfo === card.id ? null : card.id)}
-                 className={`group relative px-3 py-1.5 rounded-full border backdrop-blur-sm transition-all text-xs flex items-center gap-1.5 ${
+                 className={`group relative px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border backdrop-blur-sm transition-all text-[10px] sm:text-xs flex items-center gap-1 sm:gap-1.5 ${
                    activeInfo === card.id 
                      ? `bg-gradient-to-r ${getInfoColor(card.color)}` 
                      : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
                  }`}
                >
                  {card.icon}
-                 <span className="font-medium">{card.title}</span>
-                 <Info className="w-3 h-3 opacity-50" />
+                 <span className="font-medium hidden xs:inline">{card.title}</span>
+                 <span className="font-medium xs:hidden">{card.title.split(' ')[0]}</span>
+                 <Info className="w-2.5 h-2.5 sm:w-3 sm:h-3 opacity-50" />
                </motion.button>
              ))}
            </div>
@@ -302,7 +303,7 @@ export default function UnifiedLanding() {
        </div>
 
        {/* Main Content - 3 Column Layout */}
-       <div className="relative z-10 w-full min-h-[calc(100vh-200px)] grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] pt-32 lg:pt-24 pb-16">
+       <div className="relative z-10 w-full min-h-[calc(100vh-200px)] grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] pt-48 sm:pt-40 lg:pt-24 pb-16">
           
           {/* ZONE 1: ANXIETY */}
           <motion.section 
