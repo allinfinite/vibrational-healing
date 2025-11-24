@@ -1,90 +1,195 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSound } from '@/lib/contexts/SoundContext';
 
-export default function AudioVisualizer() {
+interface AudioVisualizerProps {
+  height?: number;
+  showZoneColors?: boolean;
+}
+
+export default function AudioVisualizer({ height = 200, showZoneColors = true }: AudioVisualizerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { analyser } = useSound();
+  const { analyser, isReady } = useSound();
+  const [currentZone, setCurrentZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
+  const animationRef = useRef<number>(0);
+  const timeRef = useRef<number>(0);
+
+  // Zone color configurations - vibrant and bold
+  const zoneColors = {
+    anxiety: {
+      primary: 'rgba(167, 139, 250, 1)',      // Bright Purple
+      secondary: 'rgba(139, 92, 246, 0.9)',   // Purple
+      tertiary: 'rgba(99, 102, 241, 0.7)',    // Indigo
+      glow: 'rgba(167, 139, 250, 0.5)',
+    },
+    transformation: {
+      primary: 'rgba(45, 212, 191, 1)',       // Bright Teal
+      secondary: 'rgba(16, 185, 129, 0.9)',   // Emerald
+      tertiary: 'rgba(6, 182, 212, 0.7)',     // Cyan
+      glow: 'rgba(45, 212, 191, 0.5)',
+    },
+    peace: {
+      primary: 'rgba(251, 191, 36, 1)',       // Bright Amber
+      secondary: 'rgba(245, 158, 11, 0.9)',   // Orange
+      tertiary: 'rgba(234, 179, 8, 0.7)',     // Yellow
+      glow: 'rgba(251, 191, 36, 0.5)',
+    }
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Resize handler
-    const resize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resize);
-    resize();
-
-    return () => window.removeEventListener('resize', resize);
-  }, []);
-
-  useEffect(() => {
-    if (!canvasRef.current || !analyser) return;
-    
-    const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    let animationId: number;
+    const resize = () => {
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+    
+    window.addEventListener('resize', resize);
+    resize();
 
     const draw = () => {
-      animationId = requestAnimationFrame(draw);
-      analyser.getByteFrequencyData(dataArray);
+      animationRef.current = requestAnimationFrame(draw);
+      timeRef.current += 0.02;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const width = canvas.offsetWidth;
+      const h = height;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, width, h);
+
+      // Get audio data if available
+      let dataArray: Uint8Array | null = null;
+      let hasAudioData = false;
       
-      // Visualization: Flowing Wave
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-      ctx.beginPath();
-
-      const sliceWidth = canvas.width * 1.0 / bufferLength;
-      let x = 0;
-
-      for(let i = 0; i < bufferLength; i++) {
-        const v = dataArray[i] / 128.0; // 0..2
-        const y = (canvas.height / 2) + (Math.sin(i/20) * v * 50); // Add sine wave modulation
-
-        if(i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-
-        x += sliceWidth * 2; // Spread out
+      if (analyser && isReady) {
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        analyser.getByteFrequencyData(dataArray as any);
+        hasAudioData = dataArray.some(v => v > 10);
       }
 
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
+      const colors = zoneColors[currentZone];
+      const centerY = h / 2;
+      const points = 150;
+
+      // Draw multiple wave layers - more prominent
+      const layerColors = [colors.primary, colors.secondary, colors.tertiary];
+      const layerWidths = [4, 3, 2];
       
-      // Second layer: Particles or higher frequency circles?
-      // Simple circle based on bass (low freq)
-      const bass = dataArray.slice(0, 10).reduce((a, b) => a + b, 0) / 10;
-      if (bass > 100) {
+      for (let layer = 0; layer < 3; layer++) {
+        ctx.beginPath();
+        ctx.lineWidth = layerWidths[layer];
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // Create gradient stroke with smooth edges
+        const gradient = ctx.createLinearGradient(0, 0, width, 0);
+        gradient.addColorStop(0, 'transparent');
+        gradient.addColorStop(0.1, layerColors[layer]);
+        gradient.addColorStop(0.5, layerColors[layer]);
+        gradient.addColorStop(0.9, layerColors[layer]);
+        gradient.addColorStop(1, 'transparent');
+        ctx.strokeStyle = gradient;
+
+        // Add shadow for glow effect
+        if (layer === 0) {
+          ctx.shadowColor = colors.glow;
+          ctx.shadowBlur = 20;
+        } else {
+          ctx.shadowBlur = 0;
+        }
+
+        for (let i = 0; i <= points; i++) {
+          const x = (i / points) * width;
+          const normalizedX = i / points;
+          
+          // Base wave parameters - bigger amplitude
+          let amplitude = 40 + layer * 15;
+          let frequency = 0.02 + layer * 0.01;
+          let phase = timeRef.current * (1 + layer * 0.3);
+
+          // Modulate with audio data if available
+          if (hasAudioData && dataArray) {
+            const dataIndex = Math.floor(normalizedX * dataArray.length * 0.5);
+            const audioValue = dataArray[dataIndex] / 255;
+            amplitude += audioValue * 60;
+          }
+
+          // Create organic wave shape
+          const y = centerY + 
+            Math.sin(x * frequency + phase) * amplitude * 0.5 +
+            Math.sin(x * frequency * 2 + phase * 1.3) * amplitude * 0.3 +
+            Math.sin(x * frequency * 0.5 + phase * 0.7) * amplitude * 0.2;
+
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+
+        ctx.stroke();
+        ctx.shadowBlur = 0; // Reset shadow
+      }
+
+      // Add glow effect at center
+      const glowGradient = ctx.createRadialGradient(
+        width / 2, centerY, 0,
+        width / 2, centerY, width / 3
+      );
+      glowGradient.addColorStop(0, colors.glow);
+      glowGradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = glowGradient;
+      ctx.fillRect(0, 0, width, h);
+
+      // Add audio-reactive pulse if playing
+      if (hasAudioData && dataArray) {
+        const bass = dataArray.slice(0, 10).reduce((a, b) => a + b, 0) / 10;
+        if (bass > 50) {
           ctx.beginPath();
-          ctx.arc(canvas.width / 2, canvas.height / 2, bass, 0, 2 * Math.PI);
-          ctx.strokeStyle = `rgba(255, 255, 200, ${bass/500})`;
+          ctx.arc(width / 2, centerY, bass * 0.5, 0, 2 * Math.PI);
+          ctx.strokeStyle = colors.glow;
+          ctx.lineWidth = 2;
           ctx.stroke();
+        }
       }
     };
 
     draw();
 
-    return () => cancelAnimationFrame(animationId);
-  }, [analyser]);
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, [analyser, isReady, currentZone, height]);
+
+  // Listen for zone changes from parent or context
+  useEffect(() => {
+    const handleZoneChange = (e: CustomEvent) => {
+      setCurrentZone(e.detail as 'anxiety' | 'transformation' | 'peace');
+    };
+    
+    window.addEventListener('zonechange' as any, handleZoneChange);
+    return () => window.removeEventListener('zonechange' as any, handleZoneChange);
+  }, []);
 
   return (
-    <canvas 
+    <div className="relative w-full bg-slate-950" style={{ height }}>
+      <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 w-full h-full pointer-events-none z-0" 
-    />
+        className="absolute inset-0 w-full h-full"
+        style={{ height }}
+      />
+      {/* Fade edges */}
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-950 to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-950 to-transparent pointer-events-none" />
+    </div>
   );
 }
-

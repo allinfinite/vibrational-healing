@@ -13,7 +13,7 @@ export default function RipplePage() {
   const { scrollYProgress, voidOpacity, voidScale, waveIntensity, networkDensity } = useRippleScroll(containerRef);
 
   return (
-    <div ref={containerRef} className="relative bg-slate-950 h-[400vh]">
+    <div ref={containerRef} className="relative bg-slate-950 h-[400vh] pt-16">
         {/* Fixed Content Layer */}
         <div className="fixed inset-0 overflow-hidden">
             <VoidSection opacity={voidOpacity} scale={voidScale} />

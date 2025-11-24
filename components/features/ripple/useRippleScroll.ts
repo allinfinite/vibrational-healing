@@ -1,7 +1,7 @@
 import { useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
-export const useRippleScroll = (containerRef: React.RefObject<HTMLElement>) => {
+export const useRippleScroll = (containerRef: React.RefObject<HTMLElement | null>) => {
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]

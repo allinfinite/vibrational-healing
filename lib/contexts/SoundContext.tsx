@@ -4,11 +4,14 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { Howl, Howler } from 'howler';
 
 interface SoundContextType {
-  playVoice: (src: string, textFallback?: string) => void;
-  stopVoice: () => void;
   setZone: (zone: 'anxiety' | 'transformation' | 'peace') => void;
+  currentZone: 'anxiety' | 'transformation' | 'peace';
   resumeContext: () => Promise<void>;
   isReady: boolean;
+  isMuted: boolean;
+  toggleMute: () => void;
+  playVoice: (audioSrc: string, description: string) => void;
+  stopVoice: () => void;
   analyser: AnalyserNode | null;
 }
 
@@ -16,17 +19,16 @@ const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [currentZone, setCurrentZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
-  const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
   
-  // Web Audio API refs
   const audioCtxRef = useRef<AudioContext | null>(null);
   const oscillatorsRef = useRef<OscillatorNode[]>([]);
   const gainNodeRef = useRef<GainNode | null>(null);
-  const voiceRef = useRef<Howl | null>(null);
-  
-  // TTS State
-  const [speaking, setSpeaking] = useState(false);
+  const masterGainRef = useRef<GainNode | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const voiceHowlRef = useRef<Howl | null>(null);
+  const previousGainRef = useRef<number>(0.1);
 
   useEffect(() => {
     const initAudio = () => {
@@ -35,37 +37,27 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           const AudioContext = window.AudioContext || window.webkitAudioContext;
           audioCtxRef.current = new AudioContext();
           
-          // Create Analyser
-          const anal = audioCtxRef.current.createAnalyser();
-          anal.fftSize = 2048;
-          anal.smoothingTimeConstant = 0.8;
-          setAnalyser(anal);
-          
+          const analyser = audioCtxRef.current.createAnalyser();
+          analyser.fftSize = 2048;
+          analyserRef.current = analyser;
+
+          // Master gain for muting
+          const masterGain = audioCtxRef.current.createGain();
+          masterGain.gain.value = 1;
+          masterGainRef.current = masterGain;
+
           const gain = audioCtxRef.current.createGain();
-          // Connect to analyser first, then destination
-          gain.connect(anal);
-          anal.connect(audioCtxRef.current.destination);
-          
           gain.gain.value = 0.1; 
-          gainNodeRef.current = gain;
           
-          // Note: Howler uses its own context usually, so visualizing Howler sounds requires connecting Howler's masterGain to this analyser if possible.
-          // Since Howler creates its own context, we might just visualize the Drone Synth here.
-          // To visualize Howler, we can tell Howler to use our context:
-          // @ts-ignore
-          if (Howler.ctx) {
-              // If Howler initialized its own context, we might not be able to easily merge without more setup.
-              // But we can try to connect Howler master gain to our analyser if they share context.
-          }
+          // Connect: Gain -> MasterGain -> Analyser -> Destination
+          gain.connect(masterGain);
+          masterGain.connect(analyser);
+          analyser.connect(audioCtxRef.current.destination);
+          
+          gainNodeRef.current = gain;
       }
     };
     initAudio();
-    
-    return () => {
-        if (typeof window !== 'undefined') {
-            window.speechSynthesis.cancel();
-        }
-    };
   }, []);
 
   // Drone Synth Logic (Same as before)
@@ -123,69 +115,70 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setIsReady(true);
   };
 
-  const duckAudio = (duck: boolean) => {
-      if (gainNodeRef.current && audioCtxRef.current) {
-          const now = audioCtxRef.current.currentTime;
-          const target = duck ? 0.02 : 0.1;
-          gainNodeRef.current.gain.linearRampToValueAtTime(target, now + 0.5);
-      }
+  const toggleMute = () => {
+    if (!masterGainRef.current || !audioCtxRef.current) return;
+    
+    const ctx = audioCtxRef.current;
+    const now = ctx.currentTime;
+    
+    if (isMuted) {
+      // Unmute - restore previous gain
+      masterGainRef.current.gain.cancelScheduledValues(now);
+      masterGainRef.current.gain.setValueAtTime(0, now);
+      masterGainRef.current.gain.linearRampToValueAtTime(1, now + 0.3);
+      // Also unmute Howler
+      Howler.mute(false);
+    } else {
+      // Mute - fade to 0
+      masterGainRef.current.gain.cancelScheduledValues(now);
+      masterGainRef.current.gain.setValueAtTime(masterGainRef.current.gain.value, now);
+      masterGainRef.current.gain.linearRampToValueAtTime(0, now + 0.3);
+      // Also mute Howler
+      Howler.mute(true);
+    }
+    
+    setIsMuted(!isMuted);
   };
 
-  const playVoice = (src: string, textFallback?: string) => {
-    // Stop existing
-    stopVoice();
+  const playVoice = (audioSrc: string, description: string) => {
+    // Stop any currently playing voice
+    if (voiceHowlRef.current) {
+      voiceHowlRef.current.stop();
+      voiceHowlRef.current.unload();
+    }
 
-    // Try playing audio file first
-    const sound = new Howl({
-      src: [src],
-      volume: 1.0,
-      onplay: () => duckAudio(true),
-      onend: () => duckAudio(false),
-      onloaderror: () => {
-           // Fallback to Browser TTS if audio file fails
-           console.warn("Audio file failed/missing, using TTS fallback.");
-           if (textFallback && typeof window !== 'undefined') {
-               const utterance = new SpeechSynthesisUtterance(textFallback);
-               utterance.rate = 0.9;
-               utterance.pitch = 1;
-               utterance.volume = 0.8;
-               
-               // Try to find a good voice
-               const voices = window.speechSynthesis.getVoices();
-               const calmVoice = voices.find(v => v.name.includes("Google UK English Female") || v.name.includes("Samantha"));
-               if (calmVoice) utterance.voice = calmVoice;
-
-               utterance.onstart = () => duckAudio(true);
-               utterance.onend = () => duckAudio(false);
-               
-               window.speechSynthesis.speak(utterance);
-               setSpeaking(true);
-           } else {
-               duckAudio(false);
-           }
+    // Create and play new audio
+    voiceHowlRef.current = new Howl({
+      src: [audioSrc],
+      html5: true,
+      volume: 0.8,
+      onend: () => {
+        voiceHowlRef.current = null;
       }
     });
-    
-    voiceRef.current = sound;
-    sound.play();
+
+    voiceHowlRef.current.play();
   };
 
   const stopVoice = () => {
-      if (voiceRef.current) voiceRef.current.stop();
-      if (typeof window !== 'undefined') {
-          window.speechSynthesis.cancel();
-      }
-      duckAudio(false);
+    if (voiceHowlRef.current) {
+      voiceHowlRef.current.stop();
+      voiceHowlRef.current.unload();
+      voiceHowlRef.current = null;
+    }
   };
 
   return (
     <SoundContext.Provider value={{
-      playVoice,
-      stopVoice,
       setZone: setCurrentZone,
+      currentZone,
       resumeContext,
       isReady,
-      analyser
+      isMuted,
+      toggleMute,
+      playVoice,
+      stopVoice,
+      analyser: analyserRef.current
     }}>
       {children}
     </SoundContext.Provider>

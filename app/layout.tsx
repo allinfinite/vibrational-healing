@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SoundProvider } from "@/lib/contexts/SoundContext";
 import Navbar from "@/components/layout/Navbar";
+import PageTransition from "@/components/layout/PageTransition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +20,6 @@ export const metadata: Metadata = {
   description: "Anxiety into Peace - Sound & Energy Healing Visualized",
 };
 
-import PageTransition from "@/components/layout/PageTransition";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,11 +32,9 @@ export default function RootLayout({
       >
         <SoundProvider>
           <Navbar />
-          <main className="min-h-screen pt-16">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
+          <PageTransition>
+            {children}
+          </PageTransition>
         </SoundProvider>
       </body>
     </html>

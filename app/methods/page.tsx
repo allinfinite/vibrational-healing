@@ -42,7 +42,7 @@ export default function MethodsIndex() {
   const selectedMethod = METHODS_LIST.find(m => m.id === selectedId);
 
   return (
-    <div className="min-h-screen w-full bg-slate-950 text-slate-200">
+    <div className="min-h-screen w-full bg-slate-950 text-slate-200 pt-16">
         {/* Hero */}
         <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 z-0">

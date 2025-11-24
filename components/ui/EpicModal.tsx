@@ -76,7 +76,7 @@ export default function EpicModal({
                 exit={{ scale: 0.9, opacity: 0, y: 50 }}
                 transition={{ type: "spring", duration: 0.6 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-6xl h-[80vh] bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row"
+                className="relative w-full max-w-6xl h-[80vh] bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row group/modal"
              >
                  {/* Close Button */}
                  <button 
@@ -85,6 +85,28 @@ export default function EpicModal({
                  >
                      <X size={24} />
                  </button>
+
+                 {/* Left Arrow (Hover) */}
+                 {onPrev && (
+                     <button
+                        onClick={onPrev}
+                        className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/60 hover:bg-teal-500/80 text-white/60 hover:text-white transition-all opacity-0 group-hover/modal:opacity-100"
+                        title="Previous (←)"
+                     >
+                         <ChevronLeft size={32} />
+                     </button>
+                 )}
+
+                 {/* Right Arrow (Hover) */}
+                 {onNext && (
+                     <button
+                        onClick={onNext}
+                        className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/60 hover:bg-teal-500/80 text-white/60 hover:text-white transition-all opacity-0 group-hover/modal:opacity-100"
+                        title="Next (→)"
+                     >
+                         <ChevronRight size={32} />
+                     </button>
+                 )}
 
                  {/* Visual Side (Left/Top) */}
                  <div className="relative w-full lg:w-1/2 h-1/2 lg:h-full bg-black">
@@ -123,39 +145,44 @@ export default function EpicModal({
                      {/* Controls */}
                      <div className="flex items-center justify-between pt-6 border-t border-white/10">
                          {/* Navigation */}
-                         <div className="flex items-center space-x-4">
-                             {onPrev && (
+                         <div className="flex items-center space-x-2">
+                             {onPrev ? (
                                  <button 
                                     onClick={onPrev}
-                                    className="p-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
+                                    className="flex items-center space-x-2 px-4 py-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
                                     title="Previous (Left Arrow)"
                                  >
-                                     <ChevronLeft className="group-hover:-translate-x-1 transition-transform" />
+                                     <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                                     <span className="text-xs font-medium hidden sm:inline">PREV</span>
                                  </button>
-                             )}
-                             {onNext && (
+                             ) : <div className="w-20" />}
+                             {onNext ? (
                                  <button 
                                     onClick={onNext}
-                                    className="p-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
+                                    className="flex items-center space-x-2 px-4 py-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
                                     title="Next (Right Arrow)"
                                  >
-                                     <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+                                     <span className="text-xs font-medium hidden sm:inline">NEXT</span>
+                                     <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                  </button>
-                             )}
+                             ) : <div className="w-20" />}
                          </div>
 
                          {/* Play Action */}
-                         <button 
-                            onClick={handlePlay}
-                            className={`flex items-center px-8 py-4 rounded-full font-bold tracking-wider transition-all shadow-lg ${
-                                isPlaying 
-                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 animate-pulse' 
-                                : 'bg-teal-600 hover:bg-teal-500 text-white'
-                            }`}
-                         >
-                             {isPlaying ? <Pause size={20} className="mr-3" /> : <Play size={20} className="mr-3 fill-current" />}
-                             {isPlaying ? 'LISTENING...' : 'LISTEN GUIDE'}
-                         </button>
+                         {audioSrc && (
+                             <button 
+                                onClick={handlePlay}
+                                className={`flex items-center px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold tracking-wider transition-all shadow-lg text-sm sm:text-base ${
+                                    isPlaying 
+                                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 animate-pulse' 
+                                    : 'bg-teal-600 hover:bg-teal-500 text-white'
+                                }`}
+                             >
+                                 {isPlaying ? <Pause size={20} className="mr-2 sm:mr-3" /> : <Play size={20} className="mr-2 sm:mr-3 fill-current" />}
+                                 <span className="hidden sm:inline">{isPlaying ? 'LISTENING...' : 'LISTEN GUIDE'}</span>
+                                 <span className="sm:hidden">{isPlaying ? 'STOP' : 'PLAY'}</span>
+                             </button>
+                         )}
                      </div>
                  </div>
              </motion.div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-singing-bowl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd89b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#19547b;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#grad-singing-bowl)"/>
+  
+  <!-- Subtle Radial Overlay -->
+  <circle cx="256" cy="256" r="256" fill="radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%)"/>
+  
+  <!-- Emoji/Symbol -->
+  <text x="256" y="320" font-size="180" text-anchor="middle" filter="url(#glow)" opacity="0.9">
+    🔔
+  </text>
+</svg>

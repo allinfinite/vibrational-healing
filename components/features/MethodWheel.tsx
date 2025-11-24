@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface MethodWheelProps {
   onMethodSelect: (method: string) => void;
@@ -25,14 +26,25 @@ export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps)
         className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
         animate={{ 
             y: [0, -10, 0],
-            filter: ["drop-shadow(0 0 15px rgba(45,212,191,0.5))", "drop-shadow(0 0 25px rgba(45,212,191,0.8))", "drop-shadow(0 0 15px rgba(45,212,191,0.5))"]
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-         <div 
-            className="w-32 h-32 text-teal-200"
-            dangerouslySetInnerHTML={{ __html: icons['meditating-figure'] || '' }}
-         />
+         <div className="relative w-36 h-36 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-[0_0_50px_rgba(45,212,191,0.7)] sm:shadow-[0_0_40px_rgba(45,212,191,0.6)] border-2 border-teal-400/40">
+            <Image 
+                src="/generated/icons-new/meditating-figure.png"
+                alt="Meditation"
+                fill
+                className="object-cover"
+                sizes="144px"
+                onError={(e) => {
+                    // Fallback to SVG if PNG doesn't exist
+                    const img = e.target as HTMLImageElement;
+                    if (!img.src.endsWith('.svg')) {
+                        img.src = '/generated/icons-new/meditating-figure.svg';
+                    }
+                }}
+            />
+         </div>
       </motion.div>
 
       {/* Outer Ring */}
@@ -52,26 +64,39 @@ export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps)
         return (
           <motion.button
             key={method.id}
-            className="absolute w-20 h-20 rounded-full bg-slate-900/80 border border-teal-500/50 flex flex-col items-center justify-center backdrop-blur-md hover:bg-teal-900/90 hover:scale-110 hover:border-teal-400 transition-all z-30 group shadow-lg cursor-pointer"
+            className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-teal-900/90 via-slate-800/90 to-slate-900/90 border-2 border-teal-400/60 overflow-hidden backdrop-blur-md hover:border-teal-300 transition-all z-30 group shadow-[0_0_25px_rgba(45,212,191,0.5)] cursor-pointer"
             style={{
-               left: `calc(50% + ${x}px - 40px)`,
-               top: `calc(50% + ${y}px - 40px)`,
+               left: `calc(50% + ${x}px - 48px)`,
+               top: `calc(50% + ${y}px - 48px)`,
             }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: i * 0.1 }}
-            whileHover={{ scale: 1.15, boxShadow: "0 0 20px rgba(45,212,191,0.6)" }}
+            whileHover={{ scale: 1.15, boxShadow: "0 0 35px rgba(45,212,191,0.8)" }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onMethodSelect(method.id)}
             aria-label={`Select ${method.label}`}
           >
-            <div 
-                className="w-8 h-8 mb-1 text-teal-100 group-hover:text-white transition-colors"
-                dangerouslySetInnerHTML={{ __html: icons[method.id] || '' }} 
-            />
-            <span className="text-[8px] font-medium text-teal-200 uppercase tracking-wider text-center leading-tight px-1 group-hover:text-teal-100">
-                {method.label}
-            </span>
+            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+                <Image 
+                    src={`/generated/icons-new/${method.id}.png`}
+                    alt={method.label}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300 brightness-110"
+                    sizes="96px"
+                    onError={(e) => {
+                        // Fallback to SVG if PNG doesn't exist
+                        const img = e.target as HTMLImageElement;
+                        if (!img.src.endsWith('.svg')) {
+                            img.src = `/generated/icons-new/${method.id}.svg`;
+                        }
+                    }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity pointer-events-none" />
+                <span className="absolute bottom-1.5 left-0 right-0 text-[9px] font-bold text-white uppercase tracking-wider text-center leading-tight px-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    {method.label}
+                </span>
+            </div>
           </motion.button>
         );
       })}

@@ -1,9 +1,16 @@
-import InteractiveMap from "@/components/features/InteractiveMap";
+'use client';
+
+import UnifiedLanding from "@/components/features/UnifiedLanding";
+import VisualizerSection from "@/components/features/VisualizerSection";
 
 export default function Home() {
   return (
-    <main className="relative w-full h-screen overflow-hidden">
-      <InteractiveMap />
-    </main>
+    <div className="relative w-full min-h-screen">
+      {/* Sound Visualizer - Fixed at top */}
+      <VisualizerSection />
+      
+      {/* Unified Single-Screen Landing */}
+      <UnifiedLanding />
+    </div>
   );
 }

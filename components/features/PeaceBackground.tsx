@@ -6,68 +6,136 @@ import { motion } from 'framer-motion';
 export default function PeaceBackground() {
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-      {/* Sun Gradient Base */}
-      <div className="absolute top-[-20%] right-[-20%] w-[140%] h-[140%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-200/20 via-sky-300/5 to-transparent blur-3xl" />
+      {/* Warm ambient glow */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at 50% 60%, rgba(251,191,36,0.08) 0%, transparent 60%)'
+        }}
+      />
 
-      {/* Rotating Rays */}
-      <motion.div 
-        className="absolute top-[-50%] right-[-50%] w-[200%] h-[200%] opacity-10"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-      >
-         {[...Array(12)].map((_, i) => (
-             <div 
-                key={i}
-                className="absolute top-1/2 left-1/2 w-full h-1 bg-gradient-to-r from-amber-100 to-transparent origin-left"
-                style={{ transform: `rotate(${i * 30}deg)` }}
-             />
-         ))}
-      </motion.div>
-
-      {/* Floating Particles / "Pollen" */}
-      {[...Array(20)].map((_, i) => (
+      {/* Water Ripples - Peaceful expanding circles */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        {[...Array(5)].map((_, i) => (
           <motion.div
-            key={`p-${i}`}
-            className="absolute w-1 h-1 bg-amber-100 rounded-full blur-[1px]"
-            initial={{ 
-                x: Math.random() * 100 + "%", 
-                y: Math.random() * 100 + "%", 
-                opacity: 0 
+            key={`ripple-${i}`}
+            className="absolute rounded-full border border-amber-300/20"
+            style={{
+              width: '100px',
+              height: '100px',
             }}
+            initial={{ scale: 0.5, opacity: 0.6 }}
             animate={{ 
-                y: [null, Math.random() * -100],
-                opacity: [0, 0.8, 0] 
+              scale: [0.5, 3, 5],
+              opacity: [0.5, 0.2, 0],
             }}
-            transition={{ 
-                duration: Math.random() * 5 + 5, 
-                repeat: Infinity, 
-                delay: Math.random() * 5 
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              delay: i * 1.2,
+              ease: "easeOut"
             }}
           />
+        ))}
+      </div>
+
+      {/* Secondary ripples with emerald tint */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={`ripple2-${i}`}
+            className="absolute rounded-full border border-emerald-400/15"
+            style={{
+              width: '80px',
+              height: '80px',
+            }}
+            initial={{ scale: 0.3, opacity: 0.4 }}
+            animate={{ 
+              scale: [0.3, 2.5, 4],
+              opacity: [0.4, 0.15, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              delay: i * 2.5 + 0.5,
+              ease: "easeOut"
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Floating light particles - like dust motes in sunlight */}
+      {[...Array(25)].map((_, i) => (
+        <motion.div
+          key={`particle-${i}`}
+          className="absolute rounded-full"
+          style={{
+            width: Math.random() * 3 + 1 + 'px',
+            height: Math.random() * 3 + 1 + 'px',
+            left: Math.random() * 100 + '%',
+            top: Math.random() * 100 + '%',
+            background: i % 3 === 0 
+              ? 'rgba(251, 191, 36, 0.6)' 
+              : i % 3 === 1 
+                ? 'rgba(252, 211, 77, 0.5)' 
+                : 'rgba(16, 185, 129, 0.4)',
+            filter: 'blur(0.5px)',
+          }}
+          animate={{
+            y: [0, -30, 0],
+            x: [0, Math.random() * 20 - 10, 0],
+            opacity: [0.3, 0.7, 0.3],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: Math.random() * 6 + 4,
+            repeat: Infinity,
+            delay: Math.random() * 3,
+            ease: "easeInOut"
+          }}
+        />
       ))}
 
-      {/* Organic Ripples (CSS) */}
-      <div className="absolute bottom-[-20%] right-[-20%] w-full h-full opacity-20">
-           {[1, 2, 3].map(i => (
-               <div 
-                 key={`r-${i}`}
-                 className="absolute bottom-0 right-0 rounded-full border border-emerald-300/40"
-                 style={{
-                     width: '100%',
-                     height: '100%',
-                     animation: `ripple 8s infinite linear ${i * 2}s`
-                 }}
-               />
-           ))}
+      {/* Soft breathing glow in center */}
+      <motion.div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 70%)',
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Subtle vertical light streaks - like light through water */}
+      <div className="absolute inset-0 opacity-10">
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={`streak-${i}`}
+            className="absolute h-full w-px"
+            style={{
+              left: 20 + i * 20 + '%',
+              background: 'linear-gradient(180deg, transparent 0%, rgba(251,191,36,0.3) 30%, rgba(251,191,36,0.3) 70%, transparent 100%)',
+            }}
+            animate={{
+              opacity: [0.3, 0.6, 0.3],
+              scaleY: [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
-      
-      <style jsx>{`
-        @keyframes ripple {
-            0% { transform: scale(0.1); opacity: 1; border-width: 2px; }
-            100% { transform: scale(1.5); opacity: 0; border-width: 0px; }
-        }
-      `}</style>
     </div>
   );
 }
-
