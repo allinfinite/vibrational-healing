@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 import { useSound } from '@/lib/contexts/SoundContext';
 import { LINEAGE_CONTENT, PAGES_CONTENT } from '@/lib/content';
 
@@ -58,7 +59,7 @@ export default function HistoryPage() {
   );
 }
 
-function TimelineItem({ item, index }: { item: any, index: number }) {
+function TimelineItem({ item, index }: { item: typeof LINEAGE_CONTENT[0], index: number }) {
     const isEven = index % 2 === 0;
     const { playVoice } = useSound();
 
@@ -71,20 +72,41 @@ function TimelineItem({ item, index }: { item: any, index: number }) {
             className={`relative flex flex-col md:flex-row items-center ${isEven ? 'md:flex-row-reverse' : ''}`}
         >
             {/* Content Side */}
-            <div className="flex-1 w-full p-8 bg-slate-900/80 border border-white/10 rounded-2xl hover:border-amber-500/30 transition-colors shadow-2xl relative group cursor-pointer"
-                 onClick={() => playVoice(`/generated/audio/${item.id}.mp3`, item.text)}
+            <div className="flex-1 w-full p-6 sm:p-8 bg-slate-900/80 border border-white/10 rounded-2xl hover:border-amber-500/30 transition-colors shadow-2xl relative group cursor-pointer"
+                 onClick={() => item.audioFile && playVoice(`/generated/audio/${item.audioFile}`, item.text)}
             >
-                <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl font-bold text-amber-500">
-                    0{index + 1}
-                </div>
-                <h3 className="text-3xl font-serif text-amber-100 mb-4 group-hover:text-amber-400 transition-colors">
-                    {item.title}
-                </h3>
-                <p className="text-slate-400 leading-relaxed mb-6">
-                    {item.fullDescription || item.text}
-                </p>
-                <div className="flex items-center text-xs text-teal-500/60 font-mono tracking-widest uppercase">
-                    <span>Key Method: {item.relatedMethod.replace('-', ' ')}</span>
+                {/* Lineage Icon */}
+                <div className="flex items-start gap-4 sm:gap-6">
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 border-amber-500/30 flex-shrink-0 shadow-lg shadow-amber-500/10">
+                        <Image
+                            src={`/generated/images/methods/lineage-${item.id}.png`}
+                            alt={item.title}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                        <div className="absolute top-4 right-4 opacity-10 text-4xl sm:text-6xl font-bold text-amber-500">
+                            0{index + 1}
+                        </div>
+                        <h3 className="text-xl sm:text-3xl font-serif text-amber-100 mb-2 sm:mb-4 group-hover:text-amber-400 transition-colors pr-12">
+                            {item.title}
+                        </h3>
+                        <p className="text-sm sm:text-base text-slate-400 leading-relaxed mb-4 sm:mb-6">
+                            {item.fullDescription || item.text}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-3 text-xs">
+                            <span className="text-teal-500/60 font-mono tracking-widest uppercase">
+                                Method: {item.relatedMethod.replace('-', ' ')}
+                            </span>
+                            {item.audioFile && (
+                                <span className="px-2 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                    🔊 Click to listen
+                                </span>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
 
