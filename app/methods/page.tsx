@@ -8,12 +8,54 @@ import EpicModal from '@/components/ui/EpicModal';
 import Image from 'next/image';
 
 const METHODS_LIST = [
-  { id: 'tuning-fork', label: 'Tuning Forks', desc: 'Precision frequency tools for biofield clearing.', fullText: "Tuning forks are precision instruments that emit a pure, coherent acoustic wave. When placed near the body (or on acoustic meridian points), they use the principle of resonance to 'tune' the biofield. They are particularly effective for clearing static or 'noise' in the subtle energy field, much like combing out a tangled knot in hair." },
-  { id: 'voice-chanting', label: 'Voice & Chanting', desc: 'Using the body as a resonant chamber.', fullText: "The voice is the most powerful healing instrument because it comes from within. Self-generated sound vibrates the skull, the vagus nerve, and the entire skeletal structure. Chanting regulates the nervous system, lengthens the exhalation (stimulating the parasympathetic response), and releases nitric oxide." },
-  { id: 'singing-bowl', label: 'Singing Bowls', desc: 'Harmonic overtones for deep relaxation.', fullText: "Crystal and Tibetan singing bowls produce a rich tapestry of harmonics. These complex frequencies confuse the linear mind, allowing it to relax, while the pure tones entrain the brain into Alpha and Theta states—the zone of deep meditation and healing." },
-  { id: 'didgeridoo', label: 'Didgeridoos', desc: 'Earth frequencies for grounding.', fullText: "The Didgeridoo produces ultra-low frequency (ULF) sound waves that can penetrate deep into muscle tissue and bone. It is often used for pain relief and grounding, connecting the listener to the resonant frequency of the Earth (Schumann Resonance)." },
-  { id: 'world-prayer', label: 'World Prayers', desc: 'Intention-based collective resonance.', fullText: "Prayer, when vocalized or held in group silence, creates a coherent field of intent. Studies in consciousness science suggest that focused group intention can affect random number generators and water structure, implying that our 'sound'—whether audible or internal—shapes reality." },
-  { id: 'creative-methods', label: 'Creative Expression', desc: 'Art and movement as vibrational therapy.', fullText: "Sound healing isn't just passive. Engaging in creative flow—painting to music, dancing to rhythm, or free-form toning—releases trapped emotional energy (e-motion = energy in motion) and integrates the healing into the physical body." },
+  { 
+    id: 'tuning-fork', 
+    label: 'Tuning Forks', 
+    desc: 'Precision frequency tools for biofield clearing.', 
+    fullText: "Tuning forks are precision instruments that emit a pure, coherent acoustic wave. When placed near the body (or on acoustic meridian points), they use the principle of resonance to 'tune' the biofield. They are particularly effective for clearing static or 'noise' in the subtle energy field, much like combing out a tangled knot in hair.",
+    audioFile: 'tuning-forks.mp3',
+    audioSource: { title: 'Sound Healing Vibes', url: 'https://www.youtube.com/watch?v=0MzHdxXhUwQ' }
+  },
+  { 
+    id: 'voice-chanting', 
+    label: 'Voice & Chanting', 
+    desc: 'Using the body as a resonant chamber.', 
+    fullText: "The voice is the most powerful healing instrument because it comes from within. Self-generated sound vibrates the skull, the vagus nerve, and the entire skeletal structure. Chanting regulates the nervous system, lengthens the exhalation (stimulating the parasympathetic response), and releases nitric oxide.",
+    audioFile: 'voice.mp3',
+    audioSource: { title: 'Eternal Om', artist: 'Mystre and Dyloot · Communication With Spirit', url: 'https://www.youtube.com/watch?v=z96qe75LOF8' }
+  },
+  { 
+    id: 'singing-bowl', 
+    label: 'Singing Bowls', 
+    desc: 'Harmonic overtones for deep relaxation.', 
+    fullText: "Crystal and Tibetan singing bowls produce a rich tapestry of harmonics. These complex frequencies confuse the linear mind, allowing it to relax, while the pure tones entrain the brain into Alpha and Theta states—the zone of deep meditation and healing.",
+    audioFile: 'singing-bells.mp3',
+    audioSource: { title: '528Hz Mani Singing Bowl', artist: 'Sound and Silence Resonant Healing', url: 'https://soundandsilenceresonanthealing.bandcamp.com/track/528hz-mani-singing-bowl-30min' }
+  },
+  { 
+    id: 'didgeridoo', 
+    label: 'Didgeridoos', 
+    desc: 'Earth frequencies for grounding.', 
+    fullText: "The Didgeridoo produces ultra-low frequency (ULF) sound waves that can penetrate deep into muscle tissue and bone. It is often used for pain relief and grounding, connecting the listener to the resonant frequency of the Earth (Schumann Resonance).",
+    audioFile: 'didgeridoos.mp3',
+    audioSource: { title: 'Pablo Arellano Relaxing Music', url: 'https://www.youtube.com/watch?v=_jEySIFBfwQ' }
+  },
+  { 
+    id: 'world-prayer', 
+    label: 'World Prayers', 
+    desc: 'Intention-based collective resonance.', 
+    fullText: "Prayer, when vocalized or held in group silence, creates a coherent field of intent. Studies in consciousness science suggest that focused group intention can affect random number generators and water structure, implying that our 'sound'—whether audible or internal—shapes reality.",
+    audioFile: 'world-prayers.mp3',
+    audioSource: { title: 'Gregorian Chanting', url: 'https://www.youtube.com/watch?v=z96qe75LOF8' }
+  },
+  { 
+    id: 'creative-methods', 
+    label: 'Creative Expression', 
+    desc: 'Art and movement as vibrational therapy.', 
+    fullText: "Sound healing isn't just passive. Engaging in creative flow—painting to music, dancing to rhythm, or free-form toning—releases trapped emotional energy (e-motion = energy in motion) and integrates the healing into the physical body.",
+    audioFile: 'creative-methods.mp3',
+    audioSource: { title: 'Malte Marten Music', url: 'https://www.maltemartenmethod.com/' }
+  },
 ];
 
 export default function MethodsIndex() {
@@ -101,7 +143,8 @@ export default function MethodsIndex() {
             subtitle="Vibrational Tool"
             description={selectedMethod?.fullText || ''}
             imageSrc={selectedMethod ? `/generated/images/methods/${selectedMethod.id}.png` : undefined}
-            audioSrc={selectedMethod ? `/generated/audio/${selectedMethod.id}.mp3` : undefined}
+            audioSrc={selectedMethod?.audioFile ? `/generated/audio/${selectedMethod.audioFile}` : undefined}
+            audioSource={selectedMethod?.audioSource}
         />
     </div>
   );

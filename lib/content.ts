@@ -2,44 +2,76 @@ export const LINEAGE_CONTENT = [
   {
     id: 'vibrational-medicine',
     title: 'Vibrational Medicine',
-    text: 'The idea that sound, frequency, and subtle energy affect the body–mind system. Rooted in Richard Gerber’s work.',
+    text: "The idea that sound, frequency, and subtle energy affect the body–mind system. Rooted in Richard Gerber's work.",
     relatedMethod: 'tuning-fork',
-    fullDescription: 'Vibrational Medicine views the human body as a multidimensional energy system. It suggests that illness often begins as a disruption in the subtle energy fields before manifesting physically. By using specific frequencies—whether through light, sound, or electromagnetic fields—practitioners aim to restore coherence to the biofield, allowing the body to heal itself.'
+    audioFile: 'tuning-forks.mp3',
+    fullDescription: 'Vibrational Medicine views the human body as a multidimensional energy system. It suggests that illness often begins as a disruption in the subtle energy fields before manifesting physically. By using specific frequencies—whether through light, sound, or electromagnetic fields—practitioners aim to restore coherence to the biofield, allowing the body to heal itself.',
+    audioSource: {
+      title: 'Sound Healing Vibes',
+      url: 'https://www.youtube.com/watch?v=0MzHdxXhUwQ'
+    }
   },
   {
     id: 'energy-medicine',
     title: 'Energy Medicine',
     text: 'The model where intention + sound modulate the human biofield. This includes healing presence, prayer, tuning-fork therapy.',
     relatedMethod: 'creative-methods',
-    fullDescription: 'Energy Medicine encompasses a broad range of modalities that work with the "Biofield" or "Life Force" (Prana, Chi, Qi). In the context of sound, it posits that conscious intention combined with vibration can clear energetic blockages. It bridges ancient spiritual practices with modern bio-electromagnetics.'
+    audioFile: 'creative-methods.mp3',
+    fullDescription: 'Energy Medicine encompasses a broad range of modalities that work with the "Biofield" or "Life Force" (Prana, Chi, Qi). In the context of sound, it posits that conscious intention combined with vibration can clear energetic blockages. It bridges ancient spiritual practices with modern bio-electromagnetics.',
+    audioSource: {
+      title: 'Malte Marten Music',
+      url: 'https://www.maltemartenmethod.com/'
+    }
   },
   {
     id: 'nada-yoga',
     title: 'Nada Yoga',
-    text: 'Yogic philosophy: inner sound (Nāda) as the bridge from disturbance to stillness. Your “anxiety → peace” arc directly matches this structure.',
+    text: 'Yogic philosophy: inner sound (Nāda) as the bridge from disturbance to stillness. Your "anxiety → peace" arc directly matches this structure.',
     relatedMethod: 'voice-chanting',
-    fullDescription: 'Nada Yoga is the "Yoga of Sound". It teaches that the entire universe consists of sound vibrations (Nāda). Practitioners listen to the "unstruck sound" (Anahata Nada) within, moving from the gross external sounds to the subtle inner silence. This practice directly transforms anxiety (mental noise) into peace (inner silence).'
+    audioFile: 'voice.mp3',
+    fullDescription: 'Nada Yoga is the "Yoga of Sound". It teaches that the entire universe consists of sound vibrations (Nāda). Practitioners listen to the "unstruck sound" (Anahata Nada) within, moving from the gross external sounds to the subtle inner silence. This practice directly transforms anxiety (mental noise) into peace (inner silence).',
+    audioSource: {
+      title: 'Eternal Om - Mystre and Dyloot',
+      artist: 'Communication With Spirit',
+      url: 'https://www.youtube.com/watch?v=z96qe75LOF8'
+    }
   },
   {
     id: 'mantra-healing',
     title: 'Mantra-based Healing',
     text: 'Sound + intention as consciousness carriers. Not limited to religious context.',
     relatedMethod: 'world-prayer',
-    fullDescription: 'Mantras are sacred sounds or phrases that carry a specific energetic signature. When chanted, they create a resonance in the body and mind that can alter consciousness. The repetition (Japa) overrides the default mode network of the brain, quieting the ego and allowing for a state of deep coherence and connection.'
+    audioFile: 'world-prayers.mp3',
+    fullDescription: 'Mantras are sacred sounds or phrases that carry a specific energetic signature. When chanted, they create a resonance in the body and mind that can alter consciousness. The repetition (Japa) overrides the default mode network of the brain, quieting the ego and allowing for a state of deep coherence and connection.',
+    audioSource: {
+      title: 'Gregorian Chanting',
+      url: 'https://www.youtube.com/watch?v=z96qe75LOF8'
+    }
   },
   {
     id: 'sound-therapy',
     title: 'Sound Therapy',
     text: 'Modern clinical term, but your chart adds intentionality and environmental impact, which is more spiritual lineage than clinical.',
     relatedMethod: 'singing-bowl',
-    fullDescription: 'Clinical Sound Therapy uses measured frequencies (like Binaural Beats or Vibroacoustic Therapy) to entrain brainwaves to desired states (Alpha, Theta, Delta). It is used for stress reduction, pain management, and sleep improvement, grounding the mystical aspects of sound in physiological data.'
+    audioFile: 'singing-bells.mp3',
+    fullDescription: 'Clinical Sound Therapy uses measured frequencies (like Binaural Beats or Vibroacoustic Therapy) to entrain brainwaves to desired states (Alpha, Theta, Delta). It is used for stress reduction, pain management, and sleep improvement, grounding the mystical aspects of sound in physiological data.',
+    audioSource: {
+      title: '528Hz Mani Singing Bowl',
+      artist: 'Sound and Silence Resonant Healing',
+      url: 'https://soundandsilenceresonanthealing.bandcamp.com/track/528hz-mani-singing-bowl-30min'
+    }
   },
   {
     id: 'shamanic-healing',
     title: 'Shamanic Sound Healing',
     text: 'Didgeridoo, voice, group sound fields, environmental ripple effects.',
     relatedMethod: 'didgeridoo',
-    fullDescription: 'Shamanic traditions have used sound (drumming, rattling, chanting) for millennia to access altered states of consciousness. The Didgeridoo, for example, produces low-frequency vibrations that resonate with the earth and the physical body, facilitating deep grounding and release of trauma.'
+    audioFile: 'didgeridoos.mp3',
+    fullDescription: 'Shamanic traditions have used sound (drumming, rattling, chanting) for millennia to access altered states of consciousness. The Didgeridoo, for example, produces low-frequency vibrations that resonate with the earth and the physical body, facilitating deep grounding and release of trauma.',
+    audioSource: {
+      title: 'Pablo Arellano Relaxing Music',
+      url: 'https://www.youtube.com/watch?v=_jEySIFBfwQ'
+    }
   },
   {
     id: 'integral-resonance',
@@ -51,7 +83,7 @@ export const LINEAGE_CONTENT = [
   {
     id: 'field-effect',
     title: 'Field-Effect Healing',
-    text: 'The “sound ripple effect” onto the world is classic Lynne McTaggart-style field coherence framing.',
+    text: 'The "sound ripple effect" onto the world is classic Lynne McTaggart-style field coherence framing.',
     relatedMethod: 'peace',
     fullDescription: 'This concept expands healing to the planetary scale. It proposes that group intention and shared coherent sound (like global meditations) can influence the "Field" of the planet. It reframes personal healing as an act of service to the collective.'
   }

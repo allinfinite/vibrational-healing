@@ -140,12 +140,38 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setIsMuted(!isMuted);
   };
 
+  // Fade out drone sounds when voice plays
+  const fadeDrones = (fadeOut: boolean) => {
+    if (!gainNodeRef.current || !audioCtxRef.current) return;
+    
+    const ctx = audioCtxRef.current;
+    const now = ctx.currentTime;
+    const currentGain = gainNodeRef.current.gain.value;
+    
+    gainNodeRef.current.gain.cancelScheduledValues(now);
+    gainNodeRef.current.gain.setValueAtTime(currentGain, now);
+    
+    if (fadeOut) {
+      // Store current gain and fade to near-silent
+      if (currentGain > 0.01) {
+        previousGainRef.current = currentGain;
+      }
+      gainNodeRef.current.gain.linearRampToValueAtTime(0.01, now + 0.5);
+    } else {
+      // Restore previous gain
+      gainNodeRef.current.gain.linearRampToValueAtTime(previousGainRef.current, now + 0.8);
+    }
+  };
+
   const playVoice = (audioSrc: string, description: string) => {
     // Stop any currently playing voice
     if (voiceHowlRef.current) {
       voiceHowlRef.current.stop();
       voiceHowlRef.current.unload();
     }
+
+    // Fade out drone sounds
+    fadeDrones(true);
 
     // Create and play new audio
     voiceHowlRef.current = new Howl({
@@ -154,6 +180,8 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       volume: 0.8,
       onend: () => {
         voiceHowlRef.current = null;
+        // Fade drones back in when audio ends
+        fadeDrones(false);
       }
     });
 
@@ -165,6 +193,8 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       voiceHowlRef.current.stop();
       voiceHowlRef.current.unload();
       voiceHowlRef.current = null;
+      // Fade drones back in when voice is stopped
+      fadeDrones(false);
     }
   };
 

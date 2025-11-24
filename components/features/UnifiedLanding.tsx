@@ -491,7 +491,8 @@ export default function UnifiedLanding() {
          subtitle="Vibrational Healing Lineage"
          description={lineage?.fullDescription || lineage?.text || "Sound therapy uses specific frequencies to entrain the brain and body into a state of coherence."}
          imageSrc={lineage?.relatedMethod ? `/generated/images/methods/${lineage.relatedMethod}.png` : undefined}
-         audioSrc={lineage ? `/generated/audio/${lineage.id}.mp3` : undefined}
+         audioSrc={lineage?.audioFile ? `/generated/audio/${lineage.audioFile}` : undefined}
+         audioSource={lineage?.audioSource}
        />
 
        {/* Start Overlay */}

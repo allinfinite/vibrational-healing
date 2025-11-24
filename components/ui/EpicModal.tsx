@@ -2,9 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Pause, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { useSound } from '@/lib/contexts/SoundContext';
+
+interface AudioSource {
+  title: string;
+  artist?: string;
+  url: string;
+}
 
 interface EpicModalProps {
   isOpen: boolean;
@@ -16,11 +22,12 @@ interface EpicModalProps {
   description: string;
   imageSrc?: string; // URL to the generated image
   audioSrc?: string; // URL to the audio guide
+  audioSource?: AudioSource; // Attribution for the audio
 }
 
 export default function EpicModal({
   isOpen, onClose, onNext, onPrev,
-  title, subtitle, description, imageSrc, audioSrc
+  title, subtitle, description, imageSrc, audioSrc, audioSource
 }: EpicModalProps) {
   const { playVoice, stopVoice } = useSound();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -39,13 +46,22 @@ export default function EpicModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose, onNext, onPrev]);
 
-  // Stop audio on close
+  // Auto-play audio when modal opens or content changes, stop when it closes
   useEffect(() => {
-      if (!isOpen) {
+      if (isOpen && audioSrc) {
+          // Stop any currently playing audio first
+          stopVoice();
+          // Small delay to let the modal animate in (or content to switch)
+          const timer = setTimeout(() => {
+              playVoice(audioSrc, description);
+              setIsPlaying(true);
+          }, 300);
+          return () => clearTimeout(timer);
+      } else if (!isOpen) {
           stopVoice();
           setIsPlaying(false);
       }
-  }, [isOpen, stopVoice]);
+  }, [isOpen, audioSrc, description, playVoice, stopVoice]);
 
   const handlePlay = () => {
       if (isPlaying) {
@@ -143,45 +159,66 @@ export default function EpicModal({
                      </p>
 
                      {/* Controls */}
-                     <div className="flex items-center justify-between pt-6 border-t border-white/10">
-                         {/* Navigation */}
-                         <div className="flex items-center space-x-2">
-                             {onPrev ? (
-                                 <button 
-                                    onClick={onPrev}
-                                    className="flex items-center space-x-2 px-4 py-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
-                                    title="Previous (Left Arrow)"
-                                 >
-                                     <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                                     <span className="text-xs font-medium hidden sm:inline">PREV</span>
-                                 </button>
-                             ) : <div className="w-20" />}
-                             {onNext ? (
-                                 <button 
-                                    onClick={onNext}
-                                    className="flex items-center space-x-2 px-4 py-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
-                                    title="Next (Right Arrow)"
-                                 >
-                                     <span className="text-xs font-medium hidden sm:inline">NEXT</span>
-                                     <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                 </button>
-                             ) : <div className="w-20" />}
-                         </div>
+                     <div className="flex flex-col gap-4 pt-6 border-t border-white/10">
+                         <div className="flex items-center justify-between">
+                             {/* Navigation */}
+                             <div className="flex items-center space-x-2">
+                                 {onPrev ? (
+                                     <button 
+                                        onClick={onPrev}
+                                        className="flex items-center space-x-2 px-4 py-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
+                                        title="Previous (Left Arrow)"
+                                     >
+                                         <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                                         <span className="text-xs font-medium hidden sm:inline">PREV</span>
+                                     </button>
+                                 ) : <div className="w-20" />}
+                                 {onNext ? (
+                                     <button 
+                                        onClick={onNext}
+                                        className="flex items-center space-x-2 px-4 py-3 rounded-full bg-white/5 hover:bg-teal-500 text-white transition-all group"
+                                        title="Next (Right Arrow)"
+                                     >
+                                         <span className="text-xs font-medium hidden sm:inline">NEXT</span>
+                                         <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                     </button>
+                                 ) : <div className="w-20" />}
+                             </div>
 
-                         {/* Play Action */}
-                         {audioSrc && (
-                             <button 
-                                onClick={handlePlay}
-                                className={`flex items-center px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold tracking-wider transition-all shadow-lg text-sm sm:text-base ${
-                                    isPlaying 
-                                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 animate-pulse' 
-                                    : 'bg-teal-600 hover:bg-teal-500 text-white'
-                                }`}
-                             >
-                                 {isPlaying ? <Pause size={20} className="mr-2 sm:mr-3" /> : <Play size={20} className="mr-2 sm:mr-3 fill-current" />}
-                                 <span className="hidden sm:inline">{isPlaying ? 'LISTENING...' : 'LISTEN GUIDE'}</span>
-                                 <span className="sm:hidden">{isPlaying ? 'STOP' : 'PLAY'}</span>
-                             </button>
+                             {/* Play Action */}
+                             {audioSrc && (
+                                 <button 
+                                    onClick={handlePlay}
+                                    className={`flex items-center px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold tracking-wider transition-all shadow-lg text-sm sm:text-base ${
+                                        isPlaying 
+                                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 animate-pulse' 
+                                        : 'bg-teal-600 hover:bg-teal-500 text-white'
+                                    }`}
+                                 >
+                                     {isPlaying ? <Pause size={20} className="mr-2 sm:mr-3" /> : <Play size={20} className="mr-2 sm:mr-3 fill-current" />}
+                                     <span className="hidden sm:inline">{isPlaying ? 'LISTENING...' : 'LISTEN GUIDE'}</span>
+                                     <span className="sm:hidden">{isPlaying ? 'STOP' : 'PLAY'}</span>
+                                 </button>
+                             )}
+                         </div>
+                         
+                         {/* Audio Source Attribution */}
+                         {audioSource && (
+                             <div className="flex items-center justify-end">
+                                 <a 
+                                    href={audioSource.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 text-xs text-slate-400 hover:text-teal-300 transition-colors group"
+                                 >
+                                     <span className="opacity-60">Sound:</span>
+                                     <span className="font-medium">{audioSource.title}</span>
+                                     {audioSource.artist && (
+                                         <span className="opacity-60">by {audioSource.artist}</span>
+                                     )}
+                                     <ExternalLink size={12} className="opacity-50 group-hover:opacity-100" />
+                                 </a>
+                             </div>
                          )}
                      </div>
                  </div>
