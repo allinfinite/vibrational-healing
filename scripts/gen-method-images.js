@@ -59,6 +59,18 @@ const METHODS = [
     {
         name: 'passive-benefit',
         prompt: 'Two figures (male and female) sitting in meditation in a serene, glowing blue environment. Surrounded by flowing waves of healing energy and soft light particles. Peaceful, harmonious, ethereal, spiritual art style, shades of teal, blue, and soft white.'
+    },
+    {
+        name: 'breath',
+        prompt: 'Artistic visualization of breath as vibration. A human silhouette inhaling and exhaling visible waves of golden prana energy. The breath forms sacred geometry patterns in the air. Lungs glowing with life force. Ethereal, healing, transcendent, soft blues and golds.'
+    },
+    {
+        name: 'dance',
+        prompt: 'Ecstatic dance visualization. Multiple diverse human figures dancing in a circle, bodies emitting trails of colorful light and energy. Movement frozen in time showing the vibration of physical motion. Joyful, liberating, communal energy. Warm sunset colors, flowing fabrics, sacred celebration.'
+    },
+    {
+        name: 'drumming',
+        prompt: 'Shamanic drumming circle. A frame drum being struck with visible sound waves rippling outward in earthy tones. Ancient symbols glowing on the drum head. Primal, grounding, rhythmic energy. Firelight ambiance, deep reds and oranges, ritualistic atmosphere.'
     }
 ];
 

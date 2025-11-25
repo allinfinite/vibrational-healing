@@ -56,6 +56,33 @@ const METHODS_LIST = [
     audioFile: 'creative-methods.mp3',
     audioSource: { title: 'Malte Marten Music', url: 'https://www.maltemartenmethod.com/' }
   },
+  { 
+    id: 'breath', 
+    label: 'Breath', 
+    desc: 'All physical movement is vibration.', 
+    fullText: "Breath is the most fundamental vibration of life. Every inhale and exhale creates rhythmic waves that massage internal organs, stimulate the vagus nerve, and regulate the autonomic nervous system. Conscious breathing practices like pranayama use specific patterns to shift brainwave states, oxygenate tissues, and move stagnant energy. The breath is both a bridge between conscious and unconscious, and a powerful tool for self-regulation."
+  },
+  { 
+    id: 'dance', 
+    label: 'Dance', 
+    desc: 'Ecstatic dance and dances of universal peace.', 
+    fullText: "Dance transforms the body into a living instrument of vibration. Ecstatic dance allows free-form movement to release trauma stored in the tissues, while Dances of Universal Peace use sacred phrases from world traditions combined with simple movements to create group coherence. When we dance, we literally shake loose what no longer serves us and align with the rhythm of life itself."
+  },
+  { 
+    id: 'drumming', 
+    label: 'Drumming', 
+    desc: 'Primal rhythms for trance and healing.', 
+    fullText: "Drumming is one of humanity's oldest healing tools. The steady, repetitive beat of a drum entrains brainwaves into theta states—the realm of deep meditation, trance, and shamanic journeying. Group drumming synchronizes the heartbeats and nervous systems of participants, creating a powerful collective field. The low frequencies penetrate deep into the body, releasing tension and grounding scattered energy.",
+    audioFile: 'drumming.mp3',
+    audioSource: { title: 'Pure Shamanic Journey', artist: 'Calm Whale', url: 'https://whaleloryb.bandcamp.com/track/pure-shamanic-journey-17' }
+  },
+  { 
+    id: 'humandalas', 
+    label: 'Humandalas', 
+    desc: 'Sacred geometry through group movement.', 
+    fullText: "Humandalas are intentional group activities that involve guided movements and shapes to create a shared energetic field. Rooted in sacred geometry and ancient healing practices, Humandalas are designed to foster connection, healing, and community. Participants physically form geometric patterns—circles, spirals, stars—becoming living mandalas that generate coherent energy fields. They are a transformative tool for anyone looking to deepen their understanding of energy work and group facilitation.",
+    externalLink: 'https://humandalas.com'
+  },
 ];
 
 export default function MethodsIndex() {
