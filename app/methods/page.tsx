@@ -79,8 +79,8 @@ const METHODS_LIST = [
   { 
     id: 'humandalas', 
     label: 'Humandalas', 
-    desc: 'Sacred geometry through group movement.', 
-    fullText: "Humandalas are intentional group activities that involve guided movements and shapes to create a shared energetic field. Rooted in sacred geometry and ancient healing practices, Humandalas are designed to foster connection, healing, and community. Participants physically form geometric patterns—circles, spirals, stars—becoming living mandalas that generate coherent energy fields. They are a transformative tool for anyone looking to deepen their understanding of energy work and group facilitation.",
+    desc: 'Intentional Harmonic Transmission through sacred geometry.', 
+    fullText: "Humandalas are the embodiment of Intentional Harmonic Transmission—the principle that intent can be encoded into a vibrational source, transmitted through energetic harmonics, and received by others as a regulatory or transformative influence.\n\nIn a Humandala, participants physically form sacred geometric patterns—circles, spirals, stars—becoming living mandalas. Each person holds focused intention while moving in synchronized harmony. The vibration of the group's collective intent is amplified by the geometric structure, creating a coherent field that extends beyond the individual participants.\n\nThis is vibrational healing at the collective scale: the group becomes both transmitter and receiver, broadcasting coherence into the surrounding field. Humandalas demonstrate that we are not isolated—our internal state ripples outward, and when we align together with shared intention, we become powerful instruments of transformation.",
     externalLink: 'https://humandalas.com'
   },
 ];
