@@ -60,7 +60,7 @@ const METHODS_LIST = [
     id: 'breath', 
     label: 'Breath', 
     desc: 'All physical movement is vibration.', 
-    fullText: "Breath is the most fundamental vibration of life. Every inhale and exhale creates rhythmic waves that massage internal organs, stimulate the vagus nerve, and regulate the autonomic nervous system. Conscious breathing practices like pranayama use specific patterns to shift brainwave states, oxygenate tissues, and move stagnant energy. The breath is both a bridge between conscious and unconscious, and a powerful tool for self-regulation."
+    fullText: "Breath is the most fundamental vibration of life. Every inhale and exhale creates rhythmic waves that massage internal organs, stimulate the vagus nerve, and regulate the autonomic nervous system. Conscious breathing practices like pranayama use specific patterns to shift brainwave states, oxygenate tissues, and move stagnant energy. The breath is both a bridge between conscious and unconscious, and a powerful tool for self-regulation.\n\nYou can program your breath with intention by pairing it with silent sound. For example: on your inhale, silently resonate the sound 'MA' in your consciousness. On your exhale, silently resonate 'OM'. These sounds are not spoken aloud—they vibrate only in your mind. This practice layers intention onto the physical vibration of breath, amplifying its transformative power. The inner sound becomes a carrier wave for your focused awareness."
   },
   { 
     id: 'dance', 
