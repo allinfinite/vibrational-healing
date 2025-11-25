@@ -15,7 +15,7 @@ import TransformationBackground from '@/components/features/TransformationBackgr
 const STATIC_ICONS = [
     'tuning-fork', 'voice-chanting', 'singing-bowl', 
     'didgeridoo', 'world-prayer', 'creative-methods', 
-    'meditating-figure'
+    'meditating-figure', 'breath', 'dance', 'drumming', 'humandalas'
 ];
 
 const METHOD_ORDER = [
@@ -24,8 +24,38 @@ const METHOD_ORDER = [
     'singing-bowl',
     'didgeridoo',
     'world-prayer',
-    'creative-methods'
+    'creative-methods',
+    'breath',
+    'dance',
+    'drumming',
+    'humandalas'
 ];
+
+// Method data for methods not in LINEAGE_CONTENT
+const METHODS_DATA: Record<string, { title: string; text: string; fullDescription: string; audioFile?: string; audioSource?: { title: string; artist?: string; url: string } }> = {
+    'breath': {
+        title: 'Breath',
+        text: 'All physical movement is vibration.',
+        fullDescription: "Breath is the most fundamental vibration of life. Every inhale and exhale creates rhythmic waves that massage internal organs, stimulate the vagus nerve, and regulate the autonomic nervous system. Conscious breathing practices like pranayama use specific patterns to shift brainwave states, oxygenate tissues, and move stagnant energy.\n\nYou can program your breath with intention by pairing it with silent sound. For example: on your inhale, silently resonate the sound 'MA' in your consciousness. On your exhale, silently resonate 'OM'. These sounds are not spoken aloud—they vibrate only in your mind. This practice layers intention onto the physical vibration of breath, amplifying its transformative power."
+    },
+    'dance': {
+        title: 'Dance',
+        text: 'Ecstatic dance and dances of universal peace.',
+        fullDescription: "Dance transforms the body into a living instrument of vibration. Ecstatic dance allows free-form movement to release trauma stored in the tissues, while Dances of Universal Peace use sacred phrases from world traditions combined with simple movements to create group coherence. When we dance, we literally shake loose what no longer serves us and align with the rhythm of life itself."
+    },
+    'drumming': {
+        title: 'Drumming',
+        text: 'Primal rhythms for trance and healing.',
+        fullDescription: "Drumming is one of humanity's oldest healing tools. The steady, repetitive beat of a drum entrains brainwaves into theta states—the realm of deep meditation, trance, and shamanic journeying. Group drumming synchronizes the heartbeats and nervous systems of participants, creating a powerful collective field. The low frequencies penetrate deep into the body, releasing tension and grounding scattered energy.",
+        audioFile: 'drumming.mp3',
+        audioSource: { title: 'Pure Shamanic Journey', artist: 'Calm Whale', url: 'https://whaleloryb.bandcamp.com/track/pure-shamanic-journey-17' }
+    },
+    'humandalas': {
+        title: 'Humandalas',
+        text: 'Sacred geometry through group movement.',
+        fullDescription: "Humandalas are intentional group activities that involve guided movements and shapes to create a shared energetic field. Rooted in sacred geometry and ancient healing practices, Humandalas are designed to foster connection, healing, and community. Participants physically form geometric patterns—circles, spirals, stars—becoming living mandalas that generate coherent energy fields. They are a transformative tool for deepening understanding of energy work and group facilitation."
+    }
+};
 
 const INFO_CARDS = [
   {
@@ -107,9 +137,15 @@ export default function UnifiedLanding() {
       stopVoice();
   };
 
-  const getLineageInfo = (method: string | null) => {
+  const getMethodInfo = (method: string | null) => {
       if (!method) return null;
-      return LINEAGE_CONTENT.find(l => l.relatedMethod === method);
+      // First check LINEAGE_CONTENT
+      const lineage = LINEAGE_CONTENT.find(l => l.relatedMethod === method);
+      if (lineage) return lineage;
+      // Then check METHODS_DATA for new methods
+      const methodData = METHODS_DATA[method];
+      if (methodData) return { ...methodData, relatedMethod: method };
+      return null;
   };
   
   const handleNext = () => {
@@ -145,7 +181,7 @@ export default function UnifiedLanding() {
       stopVoice();
   };
   
-  const lineage = getLineageInfo(selectedMethod);
+  const methodInfo = getMethodInfo(selectedMethod);
   const currentLineage = LINEAGE_CONTENT.find(l => l.id === selectedLineage);
 
   const getInfoColor = (color: string) => {
@@ -550,12 +586,12 @@ export default function UnifiedLanding() {
          onClose={() => setSelectedMethod(null)}
          onNext={handleNext}
          onPrev={handlePrev}
-         title={selectedMethod ? (lineage?.title || selectedMethod.replace(/-/g, ' ').toUpperCase()) : ''}
+         title={selectedMethod ? (methodInfo?.title || selectedMethod.replace(/-/g, ' ').toUpperCase()) : ''}
          subtitle="Vibrational Healing Method"
-         description={lineage?.fullDescription || lineage?.text || "Sound therapy uses specific frequencies to entrain the brain and body into a state of coherence."}
-         imageSrc={lineage?.relatedMethod ? `/generated/images/methods/${lineage.relatedMethod}.png` : undefined}
-         audioSrc={lineage?.audioFile ? `/generated/audio/${lineage.audioFile}` : undefined}
-         audioSource={lineage?.audioSource}
+         description={methodInfo?.fullDescription || methodInfo?.text || "Sound therapy uses specific frequencies to entrain the brain and body into a state of coherence."}
+         imageSrc={selectedMethod ? `/generated/images/methods/${selectedMethod}.png` : undefined}
+         audioSrc={methodInfo?.audioFile ? `/generated/audio/${methodInfo.audioFile}` : undefined}
+         audioSource={methodInfo?.audioSource}
        />
 
        {/* Lineage Modal */}

@@ -11,16 +11,20 @@ interface MethodWheelProps {
 
 const METHODS = [
   { id: 'tuning-fork', label: 'Tuning Forks', angle: 0 },
-  { id: 'voice-chanting', label: 'Voice (Chanting)', angle: 60 },
-  { id: 'singing-bowl', label: 'Singing Bells', angle: 120 },
-  { id: 'didgeridoo', label: 'Didgeridoos', angle: 180 },
-  { id: 'world-prayer', label: 'World Prayers', angle: 240 },
-  { id: 'creative-methods', label: 'Creative Methods', angle: 300 },
+  { id: 'voice-chanting', label: 'Voice', angle: 36 },
+  { id: 'singing-bowl', label: 'Singing Bowls', angle: 72 },
+  { id: 'didgeridoo', label: 'Didgeridoo', angle: 108 },
+  { id: 'world-prayer', label: 'World Prayer', angle: 144 },
+  { id: 'creative-methods', label: 'Creative', angle: 180 },
+  { id: 'breath', label: 'Breath', angle: 216 },
+  { id: 'dance', label: 'Dance', angle: 252 },
+  { id: 'drumming', label: 'Drumming', angle: 288 },
+  { id: 'humandalas', label: 'Humandalas', angle: 324 },
 ];
 
 export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps) {
   return (
-    <div className="relative w-[400px] h-[400px] flex items-center justify-center">
+    <div className="relative w-[420px] h-[420px] flex items-center justify-center">
       {/* Central Meditating Figure */}
       <motion.div 
         className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
@@ -57,17 +61,17 @@ export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps)
       {METHODS.map((method, i) => {
         // Calculate position on circle
         const angleRad = (method.angle - 90) * (Math.PI / 180);
-        const radius = 160; // Distance from center
+        const radius = 170; // Distance from center
         const x = Math.cos(angleRad) * radius;
         const y = Math.sin(angleRad) * radius;
 
         return (
           <motion.button
             key={method.id}
-            className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-teal-900/90 via-slate-800/90 to-slate-900/90 border-2 border-teal-400/60 overflow-hidden backdrop-blur-md hover:border-teal-300 transition-all z-30 group shadow-[0_0_25px_rgba(45,212,191,0.5)] cursor-pointer"
+            className="absolute w-20 h-20 rounded-full bg-gradient-to-br from-teal-900/90 via-slate-800/90 to-slate-900/90 border-2 border-teal-400/60 overflow-hidden backdrop-blur-md hover:border-teal-300 transition-all z-30 group shadow-[0_0_20px_rgba(45,212,191,0.5)] cursor-pointer"
             style={{
-               left: `calc(50% + ${x}px - 48px)`,
-               top: `calc(50% + ${y}px - 48px)`,
+               left: `calc(50% + ${x}px - 40px)`,
+               top: `calc(50% + ${y}px - 40px)`,
             }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -93,7 +97,7 @@ export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps)
                     }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity pointer-events-none" />
-                <span className="absolute bottom-1.5 left-0 right-0 text-[9px] font-bold text-white uppercase tracking-wider text-center leading-tight px-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                <span className="absolute bottom-1 left-0 right-0 text-[8px] font-bold text-white uppercase tracking-wider text-center leading-tight px-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                     {method.label}
                 </span>
             </div>
@@ -102,15 +106,15 @@ export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps)
       })}
       
       {/* Connecting Lines (Decorative) */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 420 420">
         {METHODS.map((method) => {
             const angleRad = (method.angle - 90) * (Math.PI / 180);
-            const x = 200 + Math.cos(angleRad) * 160;
-            const y = 200 + Math.sin(angleRad) * 160;
+            const x = 210 + Math.cos(angleRad) * 170;
+            const y = 210 + Math.sin(angleRad) * 170;
             return (
                 <line 
                     key={`line-${method.id}`}
-                    x1="200" y1="200"
+                    x1="210" y1="210"
                     x2={x} y2={y}
                     stroke="url(#lineGradient)"
                     strokeWidth="1"
