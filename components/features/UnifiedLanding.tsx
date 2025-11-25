@@ -11,6 +11,8 @@ import { LINEAGE_CONTENT } from '@/lib/content';
 import AnxietyBackground from '@/components/features/AnxietyBackground';
 import PeaceBackground from '@/components/features/PeaceBackground';
 import TransformationBackground from '@/components/features/TransformationBackground';
+import BiofieldDiagram from '@/components/features/concept/BiofieldDiagram';
+import CoherenceDiagram from '@/components/features/concept/CoherenceDiagram';
 
 const STATIC_ICONS = [
     'tuning-fork', 'voice-chanting', 'singing-bowl', 
@@ -509,43 +511,89 @@ export default function UnifiedLanding() {
           </motion.section>
        </div>
 
-       {/* Lineages Section - Bottom */}
+       {/* Lineages & Science Section - Bottom */}
        <div className="relative z-20 w-full px-4 pb-8 pt-4">
-         <div className="max-w-5xl mx-auto">
-           {/* Section Header */}
-           <div className="flex items-center justify-center gap-2 mb-4">
-             <BookOpen className="w-4 h-4 text-teal-400" />
-             <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-teal-300/80 uppercase">
-               Healing Lineages
-             </span>
-           </div>
-           
-           {/* Lineage Icons Grid */}
-           <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-             {LINEAGE_CONTENT.map((lineageItem, i) => (
-               <motion.button
-                 key={lineageItem.id}
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.5 + i * 0.05 }}
-                 onClick={() => setSelectedLineage(lineageItem.id)}
-                 className="group relative flex flex-col items-center gap-1.5 p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-teal-500/30 transition-all hover:scale-105"
-               >
-                 {/* Icon */}
-                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-white/10 group-hover:border-teal-500/50 transition-colors">
-                   <Image
-                     src={`/generated/images/methods/lineage-${lineageItem.id}.png`}
-                     alt={lineageItem.title}
-                     fill
-                     className="object-cover group-hover:scale-110 transition-transform"
-                   />
+         <div className="max-w-7xl mx-auto">
+           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 items-start">
+             
+             {/* Left Column - Biofield Diagram */}
+             <motion.div 
+               initial={{ opacity: 0, x: -20 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ delay: 0.6 }}
+               className="hidden lg:flex flex-col items-center"
+             >
+               <div className="relative w-full max-w-[180px] aspect-square">
+                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-500/10 to-purple-500/10 border border-teal-500/20" />
+                 <div className="w-full h-full p-2">
+                   <BiofieldDiagram />
                  </div>
-                 {/* Label */}
-                 <span className="text-[8px] sm:text-[10px] text-white/60 group-hover:text-teal-300 transition-colors text-center max-w-[60px] sm:max-w-[80px] leading-tight truncate">
-                   {lineageItem.title.split(' ')[0]}
+               </div>
+               <div className="text-center mt-3">
+                 <h4 className="text-xs font-semibold text-teal-300">Sound as Consciousness</h4>
+                 <p className="text-[10px] text-white/40 mt-1 max-w-[160px]">
+                   Vibration carries intent into the biofield
+                 </p>
+               </div>
+             </motion.div>
+             
+             {/* Center Column - Lineages */}
+             <div>
+               {/* Section Header */}
+               <div className="flex items-center justify-center gap-2 mb-4">
+                 <BookOpen className="w-4 h-4 text-teal-400" />
+                 <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-teal-300/80 uppercase">
+                   Healing Lineages
                  </span>
-               </motion.button>
-             ))}
+               </div>
+               
+               {/* Lineage Icons Grid */}
+               <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                 {LINEAGE_CONTENT.map((lineageItem, i) => (
+                   <motion.button
+                     key={lineageItem.id}
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ delay: 0.5 + i * 0.05 }}
+                     onClick={() => setSelectedLineage(lineageItem.id)}
+                     className="group relative flex flex-col items-center gap-1.5 p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-teal-500/30 transition-all hover:scale-105"
+                   >
+                     {/* Icon */}
+                     <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-white/10 group-hover:border-teal-500/50 transition-colors">
+                       <Image
+                         src={`/generated/images/methods/lineage-${lineageItem.id}.png`}
+                         alt={lineageItem.title}
+                         fill
+                         className="object-cover group-hover:scale-110 transition-transform"
+                       />
+                     </div>
+                     {/* Label */}
+                     <span className="text-[8px] sm:text-[10px] text-white/60 group-hover:text-teal-300 transition-colors text-center max-w-[60px] sm:max-w-[80px] leading-tight truncate">
+                       {lineageItem.title.split(' ')[0]}
+                     </span>
+                   </motion.button>
+                 ))}
+               </div>
+             </div>
+             
+             {/* Right Column - Coherence Diagram */}
+             <motion.div 
+               initial={{ opacity: 0, x: 20 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ delay: 0.6 }}
+               className="hidden lg:flex flex-col items-center"
+             >
+               <div className="relative w-full max-w-[200px] h-[120px] rounded-xl overflow-hidden bg-slate-900/60 border border-amber-500/20">
+                 <CoherenceDiagram />
+               </div>
+               <div className="text-center mt-3">
+                 <h4 className="text-xs font-semibold text-amber-300">Anxiety → Coherence</h4>
+                 <p className="text-[10px] text-white/40 mt-1 max-w-[160px]">
+                   Entrainment shifts chaos into harmony
+                 </p>
+               </div>
+             </motion.div>
+             
            </div>
          </div>
        </div>
