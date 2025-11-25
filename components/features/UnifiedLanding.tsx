@@ -102,11 +102,48 @@ const INFO_CARDS = [
   }
 ];
 
+// Science concept details for modals
+const SCIENCE_CONCEPTS = {
+  biofield: {
+    title: 'Sound as Consciousness',
+    subtitle: 'The Human Biofield',
+    description: `Sound is not just a physical wave—it is a carrier of information and consciousness. When we speak, sing, or play an instrument with intention, we are literally imprinting our consciousness onto air molecules, sending both a physical and energetic signal into the world.
+
+The Human Biofield is the electromagnetic field that surrounds and interpenetrates the physical body. This field is not static—it responds to thoughts, emotions, and external vibrations. Sound waves interact directly with this field, creating ripples that can either harmonize or disrupt its coherence.
+
+Research in biofield science suggests that intentional sound can:
+• Restructure the geometric patterns of the biofield
+• Clear energetic blockages and stagnation
+• Restore natural oscillation rhythms
+• Facilitate information transfer between cells
+
+When a healer uses sound with focused intention, they are essentially "broadcasting" a coherent signal that the recipient's biofield can entrain to—like tuning a radio to a clearer station.`
+  },
+  coherence: {
+    title: 'From Anxiety to Coherence',
+    subtitle: 'The Science of Entrainment',
+    description: `Anxiety is a state of physiological and energetic incoherence—jagged, irregular rhythms in the heart, brain, and nervous system. When we're anxious, our heart rate variability becomes erratic, our brainwaves scatter, and our energy field becomes fragmented.
+
+Sound healing works through a principle called "Entrainment"—the tendency of oscillating systems to synchronize. When a strong, coherent vibration (like a drum beat, singing bowl, or steady chant) enters the field of a chaotic system, the weaker oscillations naturally begin to align with the stronger one.
+
+The transformation looks like this:
+• CHAOS: Scattered thoughts, racing heart, shallow breath, fragmented biofield
+• ENTRAINMENT: External coherent sound penetrates the field
+• SYNCHRONIZATION: Internal rhythms begin matching the external pattern
+• COHERENCE: Unified heartbeat, synchronized brainwaves, calm breath, integrated field
+
+This isn't metaphor—it's physics. The same principle that causes grandfather clocks on the same wall to eventually swing in unison causes your nervous system to synchronize with coherent sound vibrations.
+
+The result: anxiety dissolves, replaced by a felt sense of peace, presence, and wholeness.`
+  }
+};
+
 export default function UnifiedLanding() {
   const { playVoice, stopVoice, resumeContext, isReady, setZone } = useSound();
   const [icons, setIcons] = useState<Record<string, string>>({});
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [selectedLineage, setSelectedLineage] = useState<string | null>(null);
+  const [selectedScience, setSelectedScience] = useState<'biofield' | 'coherence' | null>(null);
   const [activeZone, setActiveZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
   const [activeInfo, setActiveInfo] = useState<string | null>(null);
 
@@ -517,25 +554,27 @@ export default function UnifiedLanding() {
            <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 items-start">
              
              {/* Left Column - Biofield Diagram */}
-             <motion.div 
+             <motion.button 
                initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ delay: 0.6 }}
-               className="hidden lg:flex flex-col items-center"
+               onClick={() => setSelectedScience('biofield')}
+               className="hidden lg:flex flex-col items-center group cursor-pointer"
              >
-               <div className="relative w-full max-w-[180px] aspect-square">
-                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-500/10 to-purple-500/10 border border-teal-500/20" />
+               <div className="relative w-full max-w-[180px] aspect-square group-hover:scale-105 transition-transform">
+                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-500/10 to-purple-500/10 border border-teal-500/20 group-hover:border-teal-500/50 group-hover:shadow-[0_0_30px_rgba(45,212,191,0.3)] transition-all" />
                  <div className="w-full h-full p-2">
                    <BiofieldDiagram />
                  </div>
                </div>
                <div className="text-center mt-3">
-                 <h4 className="text-xs font-semibold text-teal-300">Sound as Consciousness</h4>
-                 <p className="text-[10px] text-white/40 mt-1 max-w-[160px]">
+                 <h4 className="text-xs font-semibold text-teal-300 group-hover:text-teal-200 transition-colors">Sound as Consciousness</h4>
+                 <p className="text-[10px] text-white/40 mt-1 max-w-[160px] group-hover:text-white/60 transition-colors">
                    Vibration carries intent into the biofield
                  </p>
+                 <span className="text-[9px] text-teal-500/60 mt-2 block opacity-0 group-hover:opacity-100 transition-opacity">Click to learn more</span>
                </div>
-             </motion.div>
+             </motion.button>
              
              {/* Center Column - Lineages */}
              <div>
@@ -577,22 +616,24 @@ export default function UnifiedLanding() {
              </div>
              
              {/* Right Column - Coherence Diagram */}
-             <motion.div 
+             <motion.button 
                initial={{ opacity: 0, x: 20 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ delay: 0.6 }}
-               className="hidden lg:flex flex-col items-center"
+               onClick={() => setSelectedScience('coherence')}
+               className="hidden lg:flex flex-col items-center group cursor-pointer"
              >
-               <div className="relative w-full max-w-[200px] h-[120px] rounded-xl overflow-hidden bg-slate-900/60 border border-amber-500/20">
+               <div className="relative w-full max-w-[200px] h-[120px] rounded-xl overflow-hidden bg-slate-900/60 border border-amber-500/20 group-hover:border-amber-500/50 group-hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] group-hover:scale-105 transition-all">
                  <CoherenceDiagram />
                </div>
                <div className="text-center mt-3">
-                 <h4 className="text-xs font-semibold text-amber-300">Anxiety → Coherence</h4>
-                 <p className="text-[10px] text-white/40 mt-1 max-w-[160px]">
+                 <h4 className="text-xs font-semibold text-amber-300 group-hover:text-amber-200 transition-colors">Anxiety → Coherence</h4>
+                 <p className="text-[10px] text-white/40 mt-1 max-w-[160px] group-hover:text-white/60 transition-colors">
                    Entrainment shifts chaos into harmony
                  </p>
+                 <span className="text-[9px] text-amber-500/60 mt-2 block opacity-0 group-hover:opacity-100 transition-opacity">Click to learn more</span>
                </div>
-             </motion.div>
+             </motion.button>
              
            </div>
          </div>
@@ -655,6 +696,95 @@ export default function UnifiedLanding() {
          audioSrc={currentLineage?.audioFile ? `/generated/audio/${currentLineage.audioFile}` : undefined}
          audioSource={currentLineage?.audioSource}
        />
+
+       {/* Science Concept Modal */}
+       <AnimatePresence>
+         {selectedScience && (
+           <motion.div
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }}
+             onClick={() => setSelectedScience(null)}
+             className="fixed inset-0 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-center p-4 lg:p-12"
+           >
+             <motion.div
+               initial={{ scale: 0.9, opacity: 0, y: 50 }}
+               animate={{ scale: 1, opacity: 1, y: 0 }}
+               exit={{ scale: 0.9, opacity: 0, y: 50 }}
+               transition={{ type: "spring", duration: 0.6 }}
+               onClick={(e) => e.stopPropagation()}
+               className={`relative w-full max-w-4xl max-h-[85vh] overflow-hidden rounded-3xl border shadow-2xl ${
+                 selectedScience === 'biofield' 
+                   ? 'bg-gradient-to-br from-slate-900 via-teal-950/50 to-slate-900 border-teal-500/30' 
+                   : 'bg-gradient-to-br from-slate-900 via-amber-950/30 to-slate-900 border-amber-500/30'
+               }`}
+             >
+               {/* Close Button */}
+               <button 
+                 onClick={() => setSelectedScience(null)}
+                 className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-white/20 text-white transition-all"
+               >
+                 <X size={24} />
+               </button>
+
+               <div className="p-8 lg:p-12 overflow-y-auto max-h-[85vh]">
+                 {/* Header */}
+                 <div className="flex items-start gap-6 mb-8">
+                   <div className={`w-24 h-24 lg:w-32 lg:h-32 rounded-2xl overflow-hidden flex-shrink-0 ${
+                     selectedScience === 'biofield' 
+                       ? 'bg-teal-500/20 border border-teal-500/30' 
+                       : 'bg-amber-500/20 border border-amber-500/30'
+                   }`}>
+                     {selectedScience === 'biofield' ? (
+                       <BiofieldDiagram />
+                     ) : (
+                       <CoherenceDiagram />
+                     )}
+                   </div>
+                   <div>
+                     <span className={`text-xs uppercase tracking-widest ${
+                       selectedScience === 'biofield' ? 'text-teal-400' : 'text-amber-400'
+                     }`}>
+                       {SCIENCE_CONCEPTS[selectedScience].subtitle}
+                     </span>
+                     <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+                       {SCIENCE_CONCEPTS[selectedScience].title}
+                     </h2>
+                   </div>
+                 </div>
+
+                 {/* Divider */}
+                 <div className={`w-32 h-1 rounded-full mb-8 ${
+                   selectedScience === 'biofield' ? 'bg-teal-500' : 'bg-amber-500'
+                 }`} />
+
+                 {/* Content */}
+                 <div className="prose prose-invert prose-lg max-w-none">
+                   {SCIENCE_CONCEPTS[selectedScience].description.split('\n\n').map((paragraph, i) => (
+                     <p key={i} className="text-slate-300 leading-relaxed mb-4 whitespace-pre-line">
+                       {paragraph}
+                     </p>
+                   ))}
+                 </div>
+
+                 {/* Navigation hint */}
+                 <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
+                   <button
+                     onClick={() => setSelectedScience(selectedScience === 'biofield' ? 'coherence' : 'biofield')}
+                     className={`px-6 py-3 rounded-full font-medium transition-all ${
+                       selectedScience === 'biofield'
+                         ? 'bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/30'
+                         : 'bg-teal-500/20 text-teal-300 hover:bg-teal-500/30 border border-teal-500/30'
+                     }`}
+                   >
+                     {selectedScience === 'biofield' ? 'Next: Anxiety → Coherence →' : '← Prev: Sound as Consciousness'}
+                   </button>
+                 </div>
+               </div>
+             </motion.div>
+           </motion.div>
+         )}
+       </AnimatePresence>
 
        {/* Start Overlay */}
        {!isReady && (
