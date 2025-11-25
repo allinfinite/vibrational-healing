@@ -4,8 +4,8 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { Howl, Howler } from 'howler';
 
 interface SoundContextType {
-  setZone: (zone: 'anxiety' | 'transformation' | 'peace') => void;
-  currentZone: 'anxiety' | 'transformation' | 'peace';
+  setZone: (zone: 'chaos' | 'transformation' | 'calm') => void;
+  currentZone: 'chaos' | 'transformation' | 'calm';
   resumeContext: () => Promise<void>;
   isReady: boolean;
   isMuted: boolean;
@@ -20,7 +20,7 @@ const SoundContext = createContext<SoundContextType | undefined>(undefined);
 export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentZone, setCurrentZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
+  const [currentZone, setCurrentZone] = useState<'chaos' | 'transformation' | 'calm'>('transformation');
   
   const audioCtxRef = useRef<AudioContext | null>(null);
   const oscillatorsRef = useRef<OscillatorNode[]>([]);
@@ -73,9 +73,9 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const now = ctx.currentTime;
 
       const configs = {
-          anxiety: { freqs: [55, 110, 114], type: 'sawtooth' as OscillatorType, gain: 0.05 }, 
+          chaos: { freqs: [55, 110, 114], type: 'sawtooth' as OscillatorType, gain: 0.05 }, 
           transformation: { freqs: [136.1, 272.2, 408.3], type: 'sine' as OscillatorType, gain: 0.1 }, 
-          peace: { freqs: [432, 528, 864], type: 'sine' as OscillatorType, gain: 0.08 } 
+          calm: { freqs: [432, 528, 864], type: 'sine' as OscillatorType, gain: 0.08 } 
       };
 
       const config = configs[currentZone];

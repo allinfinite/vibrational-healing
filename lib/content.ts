@@ -89,19 +89,101 @@ export const LINEAGE_CONTENT = [
   }
 ];
 
+// Water Crystal Experiments content
+export const WATER_CRYSTAL_CONTENT = {
+  title: "Dr. Emoto's Water Crystal Experiments",
+  subtitle: "Intention Made Visible",
+  description: `In the 1990s, Japanese researcher Dr. Masaru Emoto conducted groundbreaking experiments that would challenge our understanding of consciousness and matter. By exposing water to words, music, prayers, and intentions before freezing it, he discovered that the resulting ice crystals formed dramatically different geometric patterns depending on the emotional quality of the exposure.
+
+Water exposed to words like "Love," "Gratitude," and "Thank You" formed intricate, symmetrical, beautiful crystalline structures reminiscent of snowflakes. In contrast, water exposed to negative words like "Hate," "Fear," or "You Disgust Me" formed chaotic, fragmented, asymmetrical patterns with muddy coloration.
+
+These experiments suggest something profound: consciousness directly influences the structure of matter. Since the human body is approximately 60-70% water, the implications are staggering. Every thought we think, every word we speak, every intention we hold may be literally reshaping the molecular structure of our own bodies.
+
+When we engage in sound healing with positive intention, we are not just creating pleasant experiences—we may be restructuring the water molecules within our cells into more coherent, harmonious patterns. This provides a visual, scientific framework for understanding how "vibration carries consciousness."
+
+The crystal photographs serve as a bridge between the seen and unseen, making the invisible effects of intention tangible and undeniable.`,
+  crystals: [
+    {
+      id: 'love',
+      word: 'Love',
+      image: 'water-crystal-love.png',
+      description: 'Water exposed to the word "Love" forms perfectly symmetrical, intricate hexagonal crystals with delicate branching arms. The structure radiates harmony and coherence.'
+    },
+    {
+      id: 'gratitude',
+      word: 'Gratitude',
+      image: 'water-crystal-gratitude.png',
+      description: 'Gratitude produces some of the most beautiful crystals observed. The structure shows expansive, elaborate patterns suggesting openness and receptivity.'
+    },
+    {
+      id: 'hate',
+      word: 'Hate / Negative Words',
+      image: 'water-crystal-hate.png',
+      description: 'Negative intentions produce fragmented, chaotic structures with no clear symmetry. The crystal appears broken, incomplete, and turbid.'
+    },
+    {
+      id: 'classical-music',
+      word: 'Classical Music',
+      image: 'water-crystal-classical-music.png',
+      description: 'Water exposed to classical music (Beethoven, Mozart) forms ornate, jewel-like crystals with exceptional detail and complexity, reflecting the harmonic richness of the compositions.'
+    }
+  ]
+};
+
+// Vagus Nerve / Nervous System content
+export const VAGUS_NERVE_CONTENT = {
+  title: "The Vagus Nerve",
+  subtitle: "Your Body's Master Reset Switch",
+  description: `The Vagus Nerve is the longest cranial nerve in your body, wandering from your brainstem through your neck, heart, lungs, and into your gut. Its name comes from the Latin word for "wandering" (the same root as "vagabond"). This nerve is the primary communication highway of your parasympathetic nervous system—the "rest and digest" state.
+
+When the vagus nerve is activated (high "vagal tone"), your body shifts out of the fight-or-flight stress response and into a state of calm, safety, and social connection. Heart rate slows, breathing deepens, digestion improves, and the immune system strengthens.
+
+Sound healing directly stimulates the vagus nerve through several mechanisms:
+
+• **Humming & Chanting**: The vibrations from your own voice physically massage the vagus nerve as it passes through your throat
+• **Low Frequencies**: Deep tones (like didgeridoo, gongs, or bass singing bowls) stimulate vagal afferents in the gut
+• **Rhythmic Breathing**: Slow, rhythmic breathing patterns entrain the vagus nerve's natural oscillation
+• **Social Engagement**: Group sound experiences activate the "ventral vagal" state of safety and connection
+
+The Polyvagal Theory (Dr. Stephen Porges) reveals that we have three states:
+1. **Dorsal Vagal** (shutdown, freeze, depression)
+2. **Sympathetic** (fight-or-flight, anxiety, hypervigilance)
+3. **Ventral Vagal** (safety, social connection, calm alertness)
+
+Sound healing is one of the most effective tools for shifting from states 1 or 2 into the ventral vagal state of wellbeing. When we entrain to coherent sound, we literally "tune" our nervous system into harmony.`,
+  keyPoints: [
+    {
+      title: 'Amygdala Calming',
+      description: 'Rhythmic, predictable sounds reduce activity in the amygdala—the brain\'s fear center—lowering cortisol and hypervigilance.'
+    },
+    {
+      title: 'Default Mode Network',
+      description: 'Repetitive sound patterns (mantras, drumming) quiet the DMN—the brain\'s "monkey mind" responsible for rumination and anxiety.'
+    },
+    {
+      title: 'Heart Rate Variability',
+      description: 'High vagal tone is measured by increased HRV—the variation between heartbeats. Coherent sound increases HRV, a marker of resilience.'
+    },
+    {
+      title: 'Gut-Brain Axis',
+      description: 'The vagus nerve connects brain and gut. Sound vibrations can improve digestion, reduce inflammation, and support the microbiome.'
+    }
+  ]
+};
+
 export const PAGES_CONTENT = {
     concept: {
         title: "The Science of Biofield Modulation",
         heroPrompt: "A scientific yet spiritual visualization of the Human Biofield. A glowing silhouette of a human surrounded by layers of toroidal energy fields, intersecting with sound waves. Teal, gold, and deep blue colors.",
-        audioText: "Sound is a carrier of consciousness. Anxiety is simply incoherence in the system. By using intentional sound, we entrain the body back into rhythm, shifting from chaos to coherence.",
+        audioText: "Sound is a carrier of consciousness. Chaos is simply incoherence in the system. By using intentional sound, we entrain the body back into rhythm, shifting from chaos to coherence.",
         sections: [
             {
                 title: "Sound as Consciousness",
                 text: "Sound is not just a physical wave; it is a carrier of information. When we speak or sing with intent, we are imprinting our consciousness onto the air molecules, sending a physical and energetic signal into the world."
             },
             {
-                title: "From Anxiety to Coherence",
-                text: "Anxiety is a state of 'Incoherence'—jagged, irregular rhythms in the heart and brain. Sound healing works through 'Entrainment'. Strong, rhythmic, coherent vibrations (like a drum or tuning fork) pull the chaotic internal rhythms into sync, shifting the system into Coherence."
+                title: "From Chaos to Coherence",
+                text: "Chaos is a state of 'Incoherence'—jagged, irregular rhythms in the heart and brain. Sound healing works through 'Entrainment'. Strong, rhythmic, coherent vibrations (like a drum or tuning fork) pull the chaotic internal rhythms into sync, shifting the system into Coherence."
             }
         ]
     },

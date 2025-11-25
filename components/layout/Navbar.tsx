@@ -9,10 +9,10 @@ import { useSound } from '@/lib/contexts/SoundContext';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
-  { label: 'The Science', href: '/concept' },
+  { label: 'Science', href: '/concept' },
+  { label: 'Crystals', href: '/water-crystals' },
   { label: 'Lineages', href: '/history' },
   { label: 'Methods', href: '/methods' },
-  { label: 'The Ripple', href: '/ripple' },
 ];
 
 export default function Navbar() {

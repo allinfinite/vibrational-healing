@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 
-export default function AnxietyBackground() {
+export default function ChaosBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

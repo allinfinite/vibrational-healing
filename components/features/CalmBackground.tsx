@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function PeaceBackground() {
+export default function CalmBackground() {
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
       {/* Warm ambient glow */}
@@ -139,3 +139,4 @@ export default function PeaceBackground() {
     </div>
   );
 }
+

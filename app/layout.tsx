@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SoundProvider } from "@/lib/contexts/SoundContext";
-import Navbar from "@/components/layout/Navbar";
 import PageTransition from "@/components/layout/PageTransition";
 
 const geistSans = Geist({
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
     default: "Vibrational Healing Portal | Sound & Energy Medicine",
     template: "%s | Vibrational Healing"
   },
-  description: "Transform anxiety into peace through intentional sound healing. Explore tuning forks, singing bowls, voice chanting, and ancient vibrational medicine practices. Experience acoustic biofield modulation and nervous system regulation.",
+  description: "Transform chaos into calm through intentional sound healing. Explore tuning forks, singing bowls, voice chanting, and ancient vibrational medicine practices. Experience acoustic biofield modulation and nervous system regulation.",
   keywords: [
     "sound healing",
     "vibrational medicine",
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
     "biofield",
     "tuning forks",
     "singing bowls",
-    "anxiety relief",
+    "stress relief",
     "nervous system regulation",
     "polyvagal theory",
     "frequency healing",
@@ -47,8 +46,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Vibrational Healing Portal",
-    title: "Vibrational Healing Portal | Transform Anxiety into Peace",
-    description: "Discover the science of sound healing and biofield modulation. Interactive journey from anxiety to transformation to peace through intentional vibrational practices.",
+    title: "Vibrational Healing Portal | Transform Chaos into Calm",
+    description: "Discover the science of sound healing and biofield modulation. Interactive journey from chaos to transformation to calm through intentional vibrational practices.",
     images: [
       {
         url: "/generated/images/hero-landing-epic.png",
@@ -61,7 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Vibrational Healing Portal | Sound & Energy Medicine",
-    description: "Transform anxiety into peace through intentional sound healing. Explore ancient practices meets modern science.",
+    description: "Transform chaos into calm through intentional sound healing. Explore ancient practices meets modern science.",
     images: ["/generated/images/hero-landing-epic.png"]
   },
   robots: {
@@ -100,7 +99,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white overflow-x-hidden`}
       >
         <SoundProvider>
-          <Navbar />
           <PageTransition>
             {children}
           </PageTransition>

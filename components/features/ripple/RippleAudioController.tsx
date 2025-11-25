@@ -13,11 +13,11 @@ export default function RippleAudioController({ progress }: RippleAudioControlle
 
     useMotionValueEvent(progress, "change", (latest) => {
         if (latest < 0.3) {
-            setZone('anxiety'); // Internal/Mono focus
+            setZone('chaos'); // Internal/Mono focus
         } else if (latest < 0.7) {
             setZone('transformation'); // Expanding
         } else {
-            setZone('peace'); // Connected
+            setZone('calm'); // Connected
         }
     });
 

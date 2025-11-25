@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface MethodWheelProps {
   onMethodSelect: (method: string) => void;
@@ -25,20 +26,23 @@ const METHODS = [
 export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps) {
   return (
     <div className="relative w-[420px] h-[420px] flex items-center justify-center">
-      {/* Central Meditating Figure */}
+      {/* Central Meditating Figure - Links to Ripple page */}
       <motion.div 
-        className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center z-20"
         animate={{ 
             y: [0, -10, 0],
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-         <div className="relative w-36 h-36 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-[0_0_50px_rgba(45,212,191,0.7)] sm:shadow-[0_0_40px_rgba(45,212,191,0.6)] border-2 border-teal-400/40">
+         <Link 
+            href="/ripple"
+            className="relative w-36 h-36 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-[0_0_50px_rgba(45,212,191,0.7)] sm:shadow-[0_0_40px_rgba(45,212,191,0.6)] border-2 border-teal-400/40 hover:border-teal-300 hover:shadow-[0_0_70px_rgba(45,212,191,0.9)] transition-all duration-300 cursor-pointer group"
+         >
             <Image 
                 src="/generated/icons-new/meditating-figure.png"
-                alt="Meditation"
+                alt="The Ripple - Click to explore"
                 fill
-                className="object-cover"
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
                 sizes="144px"
                 onError={(e) => {
                     // Fallback to SVG if PNG doesn't exist
@@ -48,7 +52,13 @@ export default function MethodWheel({ onMethodSelect, icons }: MethodWheelProps)
                     }
                 }}
             />
-         </div>
+            {/* Hover overlay with text */}
+            <div className="absolute inset-0 bg-teal-500/0 group-hover:bg-teal-500/20 transition-colors duration-300 flex items-center justify-center">
+              <span className="text-white text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg">
+                The Ripple
+              </span>
+            </div>
+         </Link>
       </motion.div>
 
       {/* Outer Ring */}

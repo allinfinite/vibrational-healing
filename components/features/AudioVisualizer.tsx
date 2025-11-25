@@ -11,13 +11,13 @@ interface AudioVisualizerProps {
 export default function AudioVisualizer({ height = 200, showZoneColors = true }: AudioVisualizerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { analyser, isReady } = useSound();
-  const [currentZone, setCurrentZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
+  const [currentZone, setCurrentZone] = useState<'chaos' | 'transformation' | 'calm'>('transformation');
   const animationRef = useRef<number>(0);
   const timeRef = useRef<number>(0);
 
   // Zone color configurations - vibrant and bold
   const zoneColors = {
-    anxiety: {
+    chaos: {
       primary: 'rgba(167, 139, 250, 1)',      // Bright Purple
       secondary: 'rgba(139, 92, 246, 0.9)',   // Purple
       tertiary: 'rgba(99, 102, 241, 0.7)',    // Indigo
@@ -29,7 +29,7 @@ export default function AudioVisualizer({ height = 200, showZoneColors = true }:
       tertiary: 'rgba(6, 182, 212, 0.7)',     // Cyan
       glow: 'rgba(45, 212, 191, 0.5)',
     },
-    peace: {
+    calm: {
       primary: 'rgba(251, 191, 36, 1)',       // Bright Amber
       secondary: 'rgba(245, 158, 11, 0.9)',   // Orange
       tertiary: 'rgba(234, 179, 8, 0.7)',     // Yellow
@@ -173,7 +173,7 @@ export default function AudioVisualizer({ height = 200, showZoneColors = true }:
   // Listen for zone changes from parent or context
   useEffect(() => {
     const handleZoneChange = (e: CustomEvent) => {
-      setCurrentZone(e.detail as 'anxiety' | 'transformation' | 'peace');
+      setCurrentZone(e.detail as 'chaos' | 'transformation' | 'calm');
     };
     
     window.addEventListener('zonechange' as any, handleZoneChange);

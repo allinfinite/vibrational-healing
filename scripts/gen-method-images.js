@@ -49,12 +49,12 @@ const METHODS = [
         prompt: 'A bioluminescent human silhouette sitting in lotus position, floating in space. Seven chakras glowing brightly along the spine. Energy field expanding outward. Mystical, transcendent.'
     },
     {
-        name: 'icon-anxiety',
-        prompt: 'Abstract circular icon representing Anxiety. A chaotic storm of jagged, dark purple and electric blue frequencies contained within a circle. Sharp, dissonant lines, lightning-like energy, heavy atmosphere. High contrast, 3D render, icon style.'
+        name: 'icon-chaos',
+        prompt: 'Abstract circular icon representing Chaos. A chaotic storm of jagged, dark purple and electric blue frequencies contained within a circle. Sharp, dissonant lines, lightning-like energy, heavy atmosphere. High contrast, 3D render, icon style.'
     },
     {
-        name: 'icon-peace',
-        prompt: 'Abstract circular icon representing Peace. A perfect, coherent golden ripple of light expanding outward. Soft, warm amber and gold tones, sacred geometry patterns, harmonious and radiant. Glowing, ethereal, high quality 3D render, icon style.'
+        name: 'icon-calm',
+        prompt: 'Abstract circular icon representing Calm. A perfect, coherent golden ripple of light expanding outward. Soft, warm amber and gold tones, sacred geometry patterns, harmonious and radiant. Glowing, ethereal, high quality 3D render, icon style.'
     },
     {
         name: 'passive-benefit',
@@ -71,6 +71,26 @@ const METHODS = [
     {
         name: 'drumming',
         prompt: 'Shamanic drumming circle. A frame drum being struck with visible sound waves rippling outward in earthy tones. Ancient symbols glowing on the drum head. Primal, grounding, rhythmic energy. Firelight ambiance, deep reds and oranges, ritualistic atmosphere.'
+    },
+    {
+        name: 'water-crystal-love',
+        prompt: 'Dr Emoto style frozen water crystal photograph. A perfectly symmetrical, intricate hexagonal ice crystal structure, resembling a snowflake but more complex. Formed from water exposed to the word "Love". Brilliant, clear, beautiful geometric patterns. Microscope photography style, dark background, stunning crystalline detail, scientific yet magical.'
+    },
+    {
+        name: 'water-crystal-gratitude',
+        prompt: 'Dr Emoto style frozen water crystal photograph. A gorgeous symmetrical ice crystal with delicate branching arms, formed from water exposed to "Gratitude". Intricate snowflake-like structure with perfect six-fold symmetry. Crystal clear, luminous, scientific microscopy aesthetic, dark background.'
+    },
+    {
+        name: 'water-crystal-hate',
+        prompt: 'Dr Emoto style frozen water crystal photograph showing NEGATIVE intention effects. A distorted, asymmetrical, fragmented ice crystal structure. Chaotic, broken patterns with no clear symmetry. Water exposed to negative words. Muddy, incomplete formation. Microscope photography, dark background, scientific documentation style.'
+    },
+    {
+        name: 'water-crystal-classical-music',
+        prompt: 'Dr Emoto style frozen water crystal photograph. An elaborate, ornate ice crystal structure formed from water exposed to classical music (Beethoven/Mozart). Incredibly intricate and beautiful symmetry with fine detailed branches. Jewel-like, radiant, complex geometry. Microscopy style, dark background.'
+    },
+    {
+        name: 'vagus-nerve',
+        prompt: 'Clear anatomical illustration of the vagus nerve pathway. A stylized human torso and head in profile view, facing right. A bright, glowing green line representing the vagus nerve originates from the brainstem at the base of the skull, extends down the neck, branches to connect the heart and lungs in the chest, and continues down through the abdomen to connect with the stomach and intestines (gut). Key organs (brain, heart, lungs, gut) are highlighted with brighter green glows and clearly visible. The nerve pathway is the main focus - a continuous glowing green line showing the complete route from brain to gut. Dark gradient background transitioning from dark blue-purple to black. Scientific medical illustration style with clear anatomical accuracy, modern infographic aesthetic.'
     }
 ];
 

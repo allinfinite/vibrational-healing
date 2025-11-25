@@ -49,8 +49,8 @@ export default function CoherenceDiagram() {
         // Labels
         ctx.fillStyle = '#94a3b8';
         ctx.font = '12px sans-serif';
-        ctx.fillText('Incoherent (Anxiety)', 10, 30);
-        ctx.fillText('Coherent (Peace)', 10, 180);
+        ctx.fillText('Incoherent (Chaos)', 10, 30);
+        ctx.fillText('Coherent (Calm)', 10, 180);
 
         requestAnimationFrame(draw);
     };

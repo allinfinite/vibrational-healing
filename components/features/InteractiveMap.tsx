@@ -8,8 +8,8 @@ import EpicModal from '@/components/ui/EpicModal';
 import MethodWheel from '@/components/features/MethodWheel';
 import { CloudLightning, Sun } from 'lucide-react'; 
 import { LINEAGE_CONTENT } from '@/lib/content';
-import AnxietyBackground from '@/components/features/AnxietyBackground';
-import PeaceBackground from '@/components/features/PeaceBackground';
+import ChaosBackground from '@/components/features/ChaosBackground';
+import CalmBackground from '@/components/features/CalmBackground';
 import TransformationBackground from '@/components/features/TransformationBackground';
 
 const STATIC_ICONS = [
@@ -31,9 +31,9 @@ export default function InteractiveMap() {
   const { playVoice, stopVoice, resumeContext, isReady, setZone } = useSound();
   const [icons, setIcons] = useState<Record<string, string>>({});
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
-  const [activeZone, setActiveZone] = useState<'anxiety' | 'transformation' | 'peace'>('transformation');
+  const [activeZone, setActiveZone] = useState<'chaos' | 'transformation' | 'calm'>('transformation');
 
-  const handleZoneChange = (zone: 'anxiety' | 'transformation' | 'peace') => {
+  const handleZoneChange = (zone: 'chaos' | 'transformation' | 'calm') => {
     setZone(zone);
     setActiveZone(zone);
     if (typeof window !== 'undefined') {
@@ -161,7 +161,7 @@ export default function InteractiveMap() {
            />
          </svg>
 
-         {/* Traveling particles - journey from anxiety to peace */}
+         {/* Traveling particles - journey from chaos to calm */}
          <div className="absolute inset-0 overflow-hidden">
            {[...Array(20)].map((_, i) => (
              <motion.div
@@ -275,17 +275,17 @@ export default function InteractiveMap() {
        {/* Main Content - 3 Column Layout without hard dividers */}
        <div className="relative z-10 w-full min-h-screen grid grid-cols-1 lg:grid-cols-3">
           
-          {/* ZONE 1: ANXIETY */}
-          <motion.section 
-            className="relative group flex flex-col items-center justify-center p-8 min-h-[50vh] lg:min-h-screen cursor-pointer overflow-hidden"
-            onMouseEnter={() => handleZoneChange('anxiety')}
-            onClick={() => resumeContext()}
-            whileHover={{ scale: 1.01 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-             {/* Rain & Lightning Background - fades at edges */}
-             <div className="absolute inset-0" style={{ mask: 'linear-gradient(90deg, black 0%, black 70%, transparent 100%)', WebkitMask: 'linear-gradient(90deg, black 0%, black 70%, transparent 100%)' }}>
-             <AnxietyBackground />
+         {/* ZONE 1: CHAOS */}
+         <motion.section 
+           className="relative group flex flex-col items-center justify-center p-8 min-h-[50vh] lg:min-h-screen cursor-pointer overflow-hidden"
+           onMouseEnter={() => handleZoneChange('chaos')}
+           onClick={() => resumeContext()}
+           whileHover={{ scale: 1.01 }}
+           transition={{ type: "spring", stiffness: 400 }}
+         >
+            {/* Rain & Lightning Background - fades at edges */}
+            <div className="absolute inset-0" style={{ mask: 'linear-gradient(90deg, black 0%, black 70%, transparent 100%)', WebkitMask: 'linear-gradient(90deg, black 0%, black 70%, transparent 100%)' }}>
+            <ChaosBackground />
              </div>
              
              {/* Soft edge blend to center */}
@@ -323,25 +323,25 @@ export default function InteractiveMap() {
                    }}
                    transition={{ duration: 2, repeat: Infinity }}
                  >
-                     <Image 
-                        src="/generated/images/methods/icon-anxiety.png"
-                        alt="Anxiety Icon"
-                        fill
-                        className="object-cover opacity-90"
-                        onError={(e) => {
-                            const target = e.target as HTMLElement;
-                            target.style.display = 'none';
-                            if (target.nextElementSibling) {
-                                (target.nextElementSibling as HTMLElement).style.display = 'block';
-                            }
-                        }}
-                     />
-                     <CloudLightning className="w-12 h-12 text-purple-400 hidden" />
-                 </motion.div>
-                 <h2 className="text-4xl font-bold text-white mb-3 tracking-tight">ANXIETY</h2>
-                 <p className="text-slate-400 max-w-xs mx-auto leading-relaxed">
-                     Storms, Chaos, Disconnection
-                 </p>
+                    <Image 
+                       src="/generated/images/methods/icon-chaos.png"
+                       alt="Chaos Icon"
+                       fill
+                       className="object-cover opacity-90"
+                       onError={(e) => {
+                           const target = e.target as HTMLElement;
+                           target.style.display = 'none';
+                           if (target.nextElementSibling) {
+                               (target.nextElementSibling as HTMLElement).style.display = 'block';
+                           }
+                       }}
+                    />
+                    <CloudLightning className="w-12 h-12 text-purple-400 hidden" />
+                </motion.div>
+                <h2 className="text-4xl font-bold text-white mb-3 tracking-tight">CHAOS</h2>
+                <p className="text-slate-400 max-w-xs mx-auto leading-relaxed">
+                    Turbulence, Noise, Disconnection
+                </p>
                  <span className="text-xs uppercase tracking-[0.2em] text-purple-400/60 mt-3 block">
                    The Starting Point
                  </span>
@@ -389,17 +389,17 @@ export default function InteractiveMap() {
 
           </motion.section>
 
-          {/* ZONE 3: PEACE */}
-          <motion.section 
-            className="relative flex flex-col items-center justify-center p-8 min-h-[50vh] lg:min-h-screen cursor-pointer overflow-hidden"
-            onMouseEnter={() => handleZoneChange('peace')}
-            onClick={() => resumeContext()}
-            whileHover={{ scale: 1.01 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-             {/* Peaceful Background - ripples and particles - fades at edges */}
-             <div className="absolute inset-0" style={{ mask: 'linear-gradient(90deg, transparent 0%, black 30%, black 100%)', WebkitMask: 'linear-gradient(90deg, transparent 0%, black 30%, black 100%)' }}>
-             <PeaceBackground />
+         {/* ZONE 3: CALM */}
+         <motion.section 
+           className="relative flex flex-col items-center justify-center p-8 min-h-[50vh] lg:min-h-screen cursor-pointer overflow-hidden"
+           onMouseEnter={() => handleZoneChange('calm')}
+           onClick={() => resumeContext()}
+           whileHover={{ scale: 1.01 }}
+           transition={{ type: "spring", stiffness: 400 }}
+         >
+            {/* Calm Background - ripples and particles - fades at edges */}
+            <div className="absolute inset-0" style={{ mask: 'linear-gradient(90deg, transparent 0%, black 30%, black 100%)', WebkitMask: 'linear-gradient(90deg, transparent 0%, black 30%, black 100%)' }}>
+            <CalmBackground />
              </div>
              
              {/* Soft edge blend from center */}
@@ -442,25 +442,25 @@ export default function InteractiveMap() {
                    }}
                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                  >
-                     <Image 
-                        src="/generated/images/methods/icon-peace.png"
-                        alt="Peace Icon"
-                        fill
-                        className="object-cover opacity-90"
-                        onError={(e) => {
-                            const target = e.target as HTMLElement;
-                            target.style.display = 'none';
-                            if (target.nextElementSibling) {
-                                (target.nextElementSibling as HTMLElement).style.display = 'block';
-                            }
-                        }}
-                     />
-                     <Sun className="w-12 h-12 text-amber-300 animate-spin-slow hidden" />
-                 </motion.div>
-                 <h2 className="text-4xl font-bold text-white mb-3 tracking-tight">PEACE</h2>
-                 <p className="text-amber-200/70 max-w-xs mx-auto leading-relaxed">
-                     Healing, Connection, Flow
-                 </p>
+                    <Image 
+                       src="/generated/images/methods/icon-calm.png"
+                       alt="Calm Icon"
+                       fill
+                       className="object-cover opacity-90"
+                       onError={(e) => {
+                           const target = e.target as HTMLElement;
+                           target.style.display = 'none';
+                           if (target.nextElementSibling) {
+                               (target.nextElementSibling as HTMLElement).style.display = 'block';
+                           }
+                       }}
+                    />
+                    <Sun className="w-12 h-12 text-amber-300 animate-spin-slow hidden" />
+                </motion.div>
+                <h2 className="text-4xl font-bold text-white mb-3 tracking-tight">CALM</h2>
+                <p className="text-amber-200/70 max-w-xs mx-auto leading-relaxed">
+                    Stillness, Connection, Flow
+                </p>
                  <span className="text-xs uppercase tracking-[0.2em] text-amber-400/60 mt-3 block">
                    The Result
                  </span>
@@ -477,25 +477,25 @@ export default function InteractiveMap() {
                background: 'linear-gradient(90deg, #8b5cf6 0%, #2dd4bf 50%, #fbbf24 100%)'
              }}
            />
-           <motion.div
-             className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white shadow-lg"
-             style={{
-               boxShadow: activeZone === 'anxiety' 
-                 ? '0 0 20px rgba(139,92,246,0.8)' 
-                 : activeZone === 'transformation' 
-                   ? '0 0 20px rgba(45,212,191,0.8)'
-                   : '0 0 20px rgba(251,191,36,0.8)',
-             }}
-             animate={{
-               left: activeZone === 'anxiety' ? '0%' : activeZone === 'transformation' ? '50%' : '100%',
-               x: activeZone === 'anxiety' ? '0%' : activeZone === 'transformation' ? '-50%' : '-100%',
-             }}
-             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-           />
-         </div>
-         <span className="text-xs text-white/40 tracking-widest uppercase">
-           {activeZone === 'anxiety' ? 'Starting Point' : activeZone === 'transformation' ? 'Transforming' : 'Arriving'}
-         </span>
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white shadow-lg"
+            style={{
+              boxShadow: activeZone === 'chaos' 
+                ? '0 0 20px rgba(139,92,246,0.8)' 
+                : activeZone === 'transformation' 
+                  ? '0 0 20px rgba(45,212,191,0.8)'
+                  : '0 0 20px rgba(251,191,36,0.8)',
+            }}
+            animate={{
+              left: activeZone === 'chaos' ? '0%' : activeZone === 'transformation' ? '50%' : '100%',
+              x: activeZone === 'chaos' ? '0%' : activeZone === 'transformation' ? '-50%' : '-100%',
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          />
+        </div>
+        <span className="text-xs text-white/40 tracking-widest uppercase">
+          {activeZone === 'chaos' ? 'Starting Point' : activeZone === 'transformation' ? 'Transforming' : 'Arriving'}
+        </span>
        </div>
 
        {/* Info Modal */}
@@ -520,9 +520,9 @@ export default function InteractiveMap() {
              animate={{ scale: 1, opacity: 1 }}
              className="text-center text-white p-8 md:p-12 max-w-lg w-full"
            >
-             <h1 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-300 via-teal-300 to-amber-300 bg-clip-text text-transparent leading-tight">
-                 Anxiety into Peace
-             </h1>
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-300 via-teal-300 to-amber-300 bg-clip-text text-transparent leading-tight">
+                Chaos into Calm
+            </h1>
              <p className="text-lg md:text-xl text-slate-300 mb-12 font-light">
                  A visualized journey through sound and energy healing.
              </p>

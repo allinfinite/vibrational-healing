@@ -7,7 +7,7 @@ export default function VisualizerSection() {
   return (
     <>
       {/* Fixed Waveform at Top of Screen - Semi-transparent */}
-      <div className="fixed top-16 left-0 right-0 z-40 pointer-events-none opacity-30">
+      <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none opacity-30">
         <div className="relative">
           {/* Gradient fade edges */}
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-950/80 to-transparent z-10" />

@@ -1,10 +1,10 @@
 export const HEALING_STAGES = [
   {
-    id: 'anxiety',
-    title: 'Anxiety',
-    subtitle: 'Storms, Chaos, Disconnection',
+    id: 'chaos',
+    title: 'Chaos',
+    subtitle: 'Turbulence, Noise, Disconnection',
     description: 'The state of dissonance. High-beta brainwaves, scattered energy, and lack of coherence.',
-    icon: 'anxiety',
+    icon: 'chaos',
     x: 15, y: 50,
     color: 'from-slate-900 to-slate-800'
   },
@@ -18,11 +18,11 @@ export const HEALING_STAGES = [
     color: 'from-teal-900 to-teal-700'
   },
   {
-    id: 'peace',
-    title: 'Peace',
-    subtitle: 'Connection, Flow, Radiance',
+    id: 'calm',
+    title: 'Calm',
+    subtitle: 'Stillness, Connection, Flow',
     description: 'The state of coherence. Alpha/Theta brainwaves, unified field connection, and outward ripple effects.',
-    icon: 'peace',
+    icon: 'calm',
     x: 85, y: 50,
     color: 'from-amber-200 to-amber-400'
   }
@@ -73,7 +73,7 @@ export const PRACTITIONER_TOOLS = [
   }
 ];
 
-export const PEACE_CONCEPTS = [
+export const CALM_CONCEPTS = [
   {
     id: 'external-healing',
     title: 'Healing the External World',
