@@ -19,7 +19,7 @@ import SnowflakeDiagram from '@/components/features/concept/SnowflakeDiagram';
 const STATIC_ICONS = [
     'tuning-fork', 'voice-chanting', 'singing-bowl', 
     'didgeridoo', 'world-prayer', 'creative-methods', 
-    'meditating-figure', 'breath', 'dance', 'drumming', 'humandalas'
+    'meditating-figure'
 ];
 
 const METHOD_ORDER = [
@@ -329,7 +329,7 @@ export default function UnifiedLanding() {
          }} />
 
          {/* Subtle flowing wave */}
-         <svg className="absolute inset-0 w-full h-full opacity-30" preserveAspectRatio="none">
+         <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 1000 1000" preserveAspectRatio="none">
            <defs>
              <linearGradient id="flowGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.5" />
@@ -338,10 +338,11 @@ export default function UnifiedLanding() {
              </linearGradient>
            </defs>
            <motion.path
-             d="M-100,50% Q25%,40% 50%,50% T100%,50% T150%,50%"
+             d="M-100,500 Q250,400 500,500 T1000,500 T1500,500"
              fill="none"
              stroke="url(#flowGradient1)"
              strokeWidth="100"
+             vectorEffect="non-scaling-stroke"
              initial={{ x: 0 }}
              animate={{ x: [-200, 0, -200] }}
              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
